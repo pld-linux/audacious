@@ -1,0 +1,11 @@
+--- bmp-0.9.6.1/beep/beep.desktop.in.orig	2003-11-29 05:13:49.000000000 +0100
++++ bmp-0.9.6.1/beep/beep.desktop.in	2004-03-14 20:25:33.585111232 +0100
+@@ -4,6 +4,6 @@
+ Exec=beep-media-player
+ Icon=beep.svg
+ MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg
+-Categories=GTK;AudioVideo;Player
+-Terminal=0
++Categories=GTK;AudioVideo;Player;
++Terminal=false
+ Type=Application
