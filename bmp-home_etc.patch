@@ -1,0 +1,67 @@
+diff -Nur bmp-0.9.7.orig/beep/Makefile.am bmp-0.9.7/beep/Makefile.am
+--- bmp-0.9.7.orig/beep/Makefile.am	2004-07-06 05:10:47.000000000 +0000
++++ bmp-0.9.7/beep/Makefile.am	2004-07-16 10:16:42.000000000 +0000
+@@ -12,7 +12,8 @@
+ 	$(top_builddir)/libbeep/libbeep.la \
+ 	@LTLIBINTL@ \
+ 	@GNOMEVFS_LIBS@ \
+-	@GCONF_LIBS@
++	@GCONF_LIBS@ \
++	-lhome_etc
+ 
+ beep_CFLAGS = \
+ 	@X_CFLAGS@ \
+diff -Nur bmp-0.9.7.orig/beep/main.c bmp-0.9.7/beep/main.c
+--- bmp-0.9.7.orig/beep/main.c	2004-07-08 02:57:36.000000000 +0000
++++ bmp-0.9.7/beep/main.c	2004-07-16 10:16:42.000000000 +0000
+@@ -72,6 +72,7 @@
+ #include "pixmaps.h"
+ #include "beep_mini.xpm"
+ 
++#include <home_etc.h>
+ 
+ /* Translatable string for beep.desktop's comment field */
+ const gchar *desktop_comment = N_("Beep Media Player");
+@@ -375,7 +376,7 @@
+ static void
+ bmp_init_paths(void)
+ {
+-    bmp_user_dir = g_build_filename(g_get_home_dir(), BMP_RCPATH, NULL);
++    bmp_user_dir = g_build_filename(_HEdir, BMP_RCPATH, NULL);
+ 
+     bmp_user_plugin_dir =
+         g_build_filename(bmp_user_dir, BMP_USER_PLUGIN_DIR_BASENAME, NULL);
+diff -Nur bmp-0.9.7.orig/libbeep/Makefile.am bmp-0.9.7/libbeep/Makefile.am
+--- bmp-0.9.7.orig/libbeep/Makefile.am	2004-06-24 16:36:50.000000000 +0000
++++ bmp-0.9.7/libbeep/Makefile.am	2004-07-16 10:16:42.000000000 +0000
+@@ -6,7 +6,7 @@
+ lib_LTLIBRARIES = libbeep.la
+ 
+ libbeep_la_LDFLAGS = -export-dynamic -version-info $(LIBBEEP_MAJOR_VERSION):$(LIBBEEP_MINOR_VERSION):$(LIBBEEP_MICRO_VERSION)
+-libbeep_la_LIBADD = @GTK_LIBS@
++libbeep_la_LIBADD = @GTK_LIBS@ -lhome_etc
+ INCLUDES = @GTK_CFLAGS@ @GCONF_CFLAGS@ @GNOMEVFS_CFLAGS@ -I$(top_srcdir)/../intl -I$(top_srcdir)/..
+ 
+ if HAVE_GCONF
+diff -Nur bmp-0.9.7.orig/libbeep/configdb_rcfile.c bmp-0.9.7/libbeep/configdb_rcfile.c
+--- bmp-0.9.7.orig/libbeep/configdb_rcfile.c	2004-07-08 02:57:38.000000000 +0000
++++ bmp-0.9.7/libbeep/configdb_rcfile.c	2004-07-16 10:18:06.000000000 +0000
+@@ -22,6 +22,7 @@
+ #include <string.h>
+ #include "rcfile.h"
+ 
++#include <home_etc.h>
+ 
+ #define RCFILE_DEFAULT_SECTION_NAME "beep"
+ 
+@@ -40,8 +41,8 @@
+     ConfigDb *db;
+ 
+     db = g_new(ConfigDb, 1);
+-    db->filename = g_build_filename(g_get_home_dir(), BMP_RCPATH, 
+-                                    "config", NULL);
++    db->filename = g_build_filename( _HEdir, BMP_RCPATH, 
++                                    "config", NULL);
+     db->file = bmp_rcfile_open(db->filename);
+     if (!db->file)
+         db->file = bmp_rcfile_new();
