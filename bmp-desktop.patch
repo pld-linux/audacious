@@ -1,5 +1,5 @@
---- bmp-0.9.6.1/beep/beep.desktop.in.orig	Sun Mar 14 21:20:14 2004
-+++ bmp-0.9.6.1/beep/beep.desktop.in	Sun Mar 14 21:27:19 2004
+--- bmp-0.9.6.1/beep/beep.desktop.in.orig	2003-11-29 05:13:49.000000000 +0100
++++ bmp-0.9.6.1/beep/beep.desktop.in	2004-03-14 22:49:28.737368552 +0100
 @@ -1,9 +1,12 @@
  [Desktop Entry]
 +Encoding=UTF-8
@@ -7,7 +7,8 @@
  Comment=Beep media player
 +Comment[pl]=Odtwarzacz multimedialny Beep
  Exec=beep-media-player
- Icon=beep.svg
+-Icon=beep.svg
++Icon=beep
  MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg
 -Categories=GTK;AudioVideo;Player
 -Terminal=0
