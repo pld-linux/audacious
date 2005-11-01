@@ -1,67 +1,54 @@
-diff -Nur bmp-0.9.7.orig/beep/Makefile.am bmp-0.9.7/beep/Makefile.am
---- bmp-0.9.7.orig/beep/Makefile.am	2004-07-06 05:10:47.000000000 +0000
-+++ bmp-0.9.7/beep/Makefile.am	2004-07-16 10:16:42.000000000 +0000
-@@ -12,7 +12,8 @@
- 	$(top_builddir)/libbeep/libbeep.la \
- 	@LTLIBINTL@ \
- 	@GNOMEVFS_LIBS@ \
--	@GCONF_LIBS@
-+	@GCONF_LIBS@ \
+--- bmp-0.9.7.1/beep/Makefile.am.orig	2005-08-09 02:41:52.000000000 +0200
++++ bmp-0.9.7.1/beep/Makefile.am	2005-11-01 10:33:17.554845704 +0100
+@@ -11,7 +11,8 @@
+ 	$(GTK_LIBS)      \
+ 	$(LIBGLADE_LIBS) \
+ 	$(LTLIBINTL)     \
+-	$(top_builddir)/libbeep/libbeep.la
++	$(top_builddir)/libbeep/libbeep.la \
 +	-lhome_etc
  
  beep_CFLAGS = \
- 	@X_CFLAGS@ \
-diff -Nur bmp-0.9.7.orig/beep/main.c bmp-0.9.7/beep/main.c
---- bmp-0.9.7.orig/beep/main.c	2004-07-08 02:57:36.000000000 +0000
-+++ bmp-0.9.7/beep/main.c	2004-07-16 10:16:42.000000000 +0000
+ 	$(X_CFLAGS)        \
+--- bmp-0.9.7.1/beep/main.c.orig	2005-08-27 13:20:04.000000000 +0200
++++ bmp-0.9.7.1/beep/main.c	2005-11-01 10:38:05.469076088 +0100
 @@ -72,6 +72,7 @@
  #include "pixmaps.h"
- #include "beep_mini.xpm"
+ #include "images/bmp_player.xpm"
  
 +#include <home_etc.h>
  
  /* Translatable string for beep.desktop's comment field */
  const gchar *desktop_comment = N_("Beep Media Player");
-@@ -375,7 +376,7 @@
+@@ -402,7 +403,7 @@
  static void
  bmp_init_paths(void)
  {
--    bmp_user_dir = g_build_filename(g_get_home_dir(), BMP_RCPATH, NULL);
-+    bmp_user_dir = g_build_filename(_HEdir, BMP_RCPATH, NULL);
+-    bmp_paths[BMP_PATH_USER_DIR] = g_build_filename(g_get_home_dir(), BMP_RCPATH, NULL);
++    bmp_paths[BMP_PATH_USER_DIR] = g_build_filename(_HEdir, BMP_RCPATH, NULL);
  
-     bmp_user_plugin_dir =
-         g_build_filename(bmp_user_dir, BMP_USER_PLUGIN_DIR_BASENAME, NULL);
-diff -Nur bmp-0.9.7.orig/libbeep/Makefile.am bmp-0.9.7/libbeep/Makefile.am
---- bmp-0.9.7.orig/libbeep/Makefile.am	2004-06-24 16:36:50.000000000 +0000
-+++ bmp-0.9.7/libbeep/Makefile.am	2004-07-16 10:16:42.000000000 +0000
-@@ -6,7 +6,7 @@
- lib_LTLIBRARIES = libbeep.la
+     bmp_paths[BMP_PATH_USER_PLUGIN_DIR] = USER_PATH(BMP_USER_PLUGIN_DIR_BASENAME);
+     bmp_paths[BMP_PATH_USER_SKIN_DIR] = USER_PATH(BMP_SKIN_DIR_BASENAME);
+--- bmp-0.9.7.1/libbeep/Makefile.am.orig	2005-08-09 02:41:53.000000000 +0200
++++ bmp-0.9.7.1/libbeep/Makefile.am	2005-11-01 10:41:02.170213432 +0100
+@@ -10,7 +10,8 @@
+ libbeep_la_LIBADD = \
+ 	$(GTK_LIBS)      \
+ 	$(GCONF_LIBS)    \
+-	$(GNOMEVFS_LIBS)
++	$(GNOMEVFS_LIBS) \
++	-lhome_etc
  
- libbeep_la_LDFLAGS = -export-dynamic -version-info $(LIBBEEP_MAJOR_VERSION):$(LIBBEEP_MINOR_VERSION):$(LIBBEEP_MICRO_VERSION)
--libbeep_la_LIBADD = @GTK_LIBS@
-+libbeep_la_LIBADD = @GTK_LIBS@ -lhome_etc
- INCLUDES = @GTK_CFLAGS@ @GCONF_CFLAGS@ @GNOMEVFS_CFLAGS@ -I$(top_srcdir)/../intl -I$(top_srcdir)/..
- 
- if HAVE_GCONF
-diff -Nur bmp-0.9.7.orig/libbeep/configdb_rcfile.c bmp-0.9.7/libbeep/configdb_rcfile.c
---- bmp-0.9.7.orig/libbeep/configdb_rcfile.c	2004-07-08 02:57:38.000000000 +0000
-+++ bmp-0.9.7/libbeep/configdb_rcfile.c	2004-07-16 10:18:06.000000000 +0000
-@@ -22,6 +22,7 @@
- #include <string.h>
- #include "rcfile.h"
- 
-+#include <home_etc.h>
- 
- #define RCFILE_DEFAULT_SECTION_NAME "beep"
- 
-@@ -40,8 +41,8 @@
+ INCLUDES = \
+ 	$(GTK_CFLAGS)        \
+--- bmp-0.9.7.1/libbeep/configdb_rcfile.c~	2005-11-01 10:30:32.056005352 +0100
++++ bmp-0.9.7.1/libbeep/configdb_rcfile.c	2005-11-01 10:42:07.430292392 +0100
+@@ -41,7 +41,7 @@
      ConfigDb *db;
  
      db = g_new(ConfigDb, 1);
 -    db->filename = g_build_filename(g_get_home_dir(), BMP_RCPATH, 
--                                    "config", NULL);
-+    db->filename = g_build_filename( _HEdir, BMP_RCPATH, 
-+                                    "config", NULL);
++    db->filename = g_build_filename(_HEdir, BMP_RCPATH, 
+                                     "config", NULL);
      db->file = bmp_rcfile_open(db->filename);
      if (!db->file)
-         db->file = bmp_rcfile_new();

@@ -7,9 +7,9 @@ diff -aurN bmp-0.9.7rc2.orig/beep/bmp.desktop.in bmp-0.9.7rc2/beep/bmp.desktop.i
  Comment=Play music
 +Comment[pl]=Odtwarzacz muzyki
  Exec=beep-media-player
--Icon=bmp.svg
+-Icon=bmp.png
 +Icon=bmp
- MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg
+ MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg;
 -Categories=Application;GTK;AudioVideo;Player;
 +Categories=GTK;Audio;Player;
  Terminal=false
