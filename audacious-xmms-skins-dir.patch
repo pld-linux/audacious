@@ -1,0 +1,22 @@
+--- bmp-0.9.7.1/audacious/skinwin.c.orig	2005-03-23 05:55:12.000000000 +0100
++++ bmp-0.9.7.1/audacious/skinwin.c	2005-11-01 10:24:16.226140176 +0100
+@@ -231,12 +231,18 @@
+ void
+ skinlist_update(void)
+ {
+-    gchar *skinsdir;
++    gchar *str, *skinsdir;
+ 
+     skinlist_clear();
+ 
+     scan_skindir(bmp_paths[BMP_PATH_USER_SKIN_DIR]);
+     scan_skindir(DATA_DIR G_DIR_SEPARATOR_S BMP_SKIN_DIR_BASENAME);
++    str = g_strconcat(g_get_home_dir(), "/.xmms/Skins", NULL);
++    scan_skindir(str);
++    g_free(str);
++    str = g_strconcat("/usr/share/xmms", "/Skins", NULL);
++    scan_skindir(str);
++    g_free(str);
+ 
+     skinsdir = getenv("SKINSDIR");
+     if (skinsdir) {
