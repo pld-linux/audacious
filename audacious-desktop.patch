@@ -1,0 +1,17 @@
+--- audacious-0.1/audacious/audacious.desktop.in~	2005-10-24 12:06:47.000000000 +0200
++++ audacious-0.1/audacious/audacious.desktop.in	2005-11-16 07:47:30.308283072 +0100
+@@ -1,10 +1,12 @@
+ [Desktop Entry]
+ Name=Audacious
+ Comment=Play music
++Comment[pl]=Odtwarzaj muzykę
+ Exec=audacious
+-Icon=audacious.png
++Icon=audacious
+ MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg;
+-Categories=Application;GTK;AudioVideo;Player;
++Categories=GTK;Audio;Player;
+ Terminal=false
+ Type=Application
+ Encoding=UTF-8
++# vi: encoding=utf-8
