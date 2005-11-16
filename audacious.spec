@@ -311,7 +311,7 @@ umask 022
 
 %files static
 %defattr(644,root,root,755)
-%attr(644,root,root) %{_libdir}/lib*.a
+%{_libdir}/lib*.a
 
 %files input-mpg123
 %defattr(644,root,root,755)
