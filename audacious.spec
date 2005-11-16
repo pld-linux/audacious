@@ -1,31 +1,27 @@
 #
 # Conditional build:
-%bcond_without	gconf		# build with gconf support
-%bcond_without	vfs	        # build with VFS support
+%bcond_without	gconf		# build without gconf support
+%bcond_without	vfs	        # build without VFS support
 #
-#TODO:
-# - either rebranch the last stable version or bump this one to full rel.
-# - rebuild required for new gnome/howl
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	0.1
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://audacious.nenolod.net/release/%{name}-%{version}.tgz
 # Source0-md5:	540865e944f41a5bb082b13c6b8fd686
 Source1:	mp3license
-Source2:	beep.png
-Patch0:		bmp-xmms-skins-dir.patch
-Patch1:		bmp-desktop.patch
-Patch2:		bmp-home_etc.patch
+Patch0:		%{name}-xmms-skins-dir.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-home_etc.patch
 URL:		http://audacious.nenolod.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel >= 0.2.8
 BuildRequires:	flac-devel >= 1.1.2
-BuildRequires:	gtk+2-devel >= 2:2.2.0
+BuildRequires:	gtk+2-devel >= 2:2.4.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	libglade2-devel >= 2.0.0
@@ -41,15 +37,12 @@ Requires:	audacious-output-plugin
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Audacious is a media player based on XMMS (http://www.xmms.org/). The
-primary goals of this fork are UI enhancements with latest technology
-(GTK+2, Pango), and usability while maintaining the skinned UI.
+Audacious is a media player based on BMP. Since the development of the
+former project had been terminated, this fork was created.
 
 %description -l pl
-Audacious to odtwarzacz mediów oparty na XMMS-ie (http://www.xmms.org/).
-G³ówne cele tego odga³êzienia to rozszerzenie interfejsu u¿ytkownika o
-najnowsze technologie (GTK+2, Pango) i ergonomia interfejsu
-obs³uguj±cego skórki.
+Audacious to odtwarzacz mediów oparty na BMP. Powsta³ on poniewa¿
+rozwój pierwowzoru zosta³ zakoñczony.
 
 %package libs
 Summary:	Audacious media player library
@@ -233,9 +226,9 @@ Audacious.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-#%patch2 -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 rm -rf autom4te.cache
@@ -263,13 +256,11 @@ rm -rf autom4te.cache
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_libdir}/audacious/General}
+install -d $RPM_BUILD_ROOT%{_libdir}/audacious/General
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
-
-#install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}/audacious.png
 
 %find_lang %{name}
 
@@ -297,7 +288,6 @@ umask 022
 %dir %{_libdir}/audacious/Visualization
 %attr(755,root,root) %{_libdir}/audacious/Visualization/libbscope*
 %{_mandir}/man*/*
-#%{_pixmapsdir}/*
 %{_desktopdir}/*
 %dir %{_datadir}/audacious
 %dir %{_datadir}/audacious/images
