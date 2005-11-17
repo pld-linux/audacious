@@ -4,7 +4,7 @@
  [Desktop Entry]
  Name=Audacious
  Comment=Play music
-+Comment[pl]=Odtwarzaj muzykę
++Comment[pl]=Odtwarzacz muzyki
  Exec=audacious
 -Icon=audacious.png
 +Icon=audacious
