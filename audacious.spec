@@ -231,7 +231,6 @@ Audacious.
 %patch2 -p1
 
 %build
-rm -rf autom4te.cache
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
@@ -262,6 +261,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/audacious/General
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/audacious/*/*.{a,la}
+
 %find_lang %{name}
 
 %clean
@@ -286,7 +287,7 @@ umask 022
 %dir %{_libdir}/audacious/Input
 %dir %{_libdir}/audacious/Output
 %dir %{_libdir}/audacious/Visualization
-%attr(755,root,root) %{_libdir}/audacious/Visualization/libbscope*
+%attr(755,root,root) %{_libdir}/audacious/Visualization/libbscope.so
 %{_mandir}/man*/*
 %{_desktopdir}/*
 %dir %{_datadir}/audacious
@@ -315,44 +316,44 @@ umask 022
 
 %files input-mpg123
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libmpg123*
+%attr(755,root,root) %{_libdir}/audacious/Input/libmpg123.so
 
 %files input-vorbis
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libvorbis*
+%attr(755,root,root) %{_libdir}/audacious/Input/libvorbis.so
 
 %files input-cdaudio
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libcdaudio*
+%attr(755,root,root) %{_libdir}/audacious/Input/libcdaudio.so
 
 %files input-wav
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libwav*
+%attr(755,root,root) %{_libdir}/audacious/Input/libwav.so
 
 %files input-aac
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libaac*
+%attr(755,root,root) %{_libdir}/audacious/Input/libaac.so
 
 %files input-flac
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libflac*
+%attr(755,root,root) %{_libdir}/audacious/Input/libflac.so
 
 %files input-tonegen
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libtonegen*
+%attr(755,root,root) %{_libdir}/audacious/Input/libtonegen.so
 
 %files output-OSS
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libOSS*
+%attr(755,root,root) %{_libdir}/audacious/Output/libOSS.so
 
 %files output-ALSA
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libALSA*
+%attr(755,root,root) %{_libdir}/audacious/Output/libALSA.so
 
 %files output-esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libesdout*
+%attr(755,root,root) %{_libdir}/audacious/Output/libesdout.so
 
 %files output-disk
 %defattr(644,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libdisk_writer*
+%attr(755,root,root) %{_libdir}/audacious/Output/libdisk_writer.so
