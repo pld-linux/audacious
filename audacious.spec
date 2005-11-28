@@ -6,12 +6,12 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	0.1
-Release:	0.2
+Version:	0.1.1
+Release:	0.1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://audacious.nenolod.net/release/%{name}-%{version}.tgz
-# Source0-md5:	540865e944f41a5bb082b13c6b8fd686
+# Source0-md5:	12ead38a7052ed48ae67e32c5c391f9d
 Source1:	mp3license
 Patch0:		%{name}-xmms-skins-dir.patch
 Patch1:		%{name}-desktop.patch
@@ -146,7 +146,7 @@ AAC.
 
 %package input-flac
 Summary:	Audacious media player - FLAC input plugin
-Summary(pl):	Wtyczka do odtwarzania plikow FLAC odtwarzacza multimedialnego Audacious
+Summary(pl):	Wtyczka do odtwarzania plików FLAC odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 Requires:	%{name} >= %{epoch}:%{version}-%{release}
 
@@ -170,6 +170,32 @@ player.
 %description input-tonegen -l pl
 Wtyczka do generowania d¼wiêków o danej czêstotliwo¶ci dla odtwarzacza
 multimedialnego Audacious.
+
+%package input-wma
+Summary:	Audacious media player - WMA input plugin
+Summary(pl):	Wtyczka do odtwarzania plików WMA odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} >= %{epoch}:%{version}-%{release}
+
+%description input-wma
+WMA input plugin for Audacious media player.
+
+%description input-wma -l pl
+Wtyczka dla odtwarzacza multimedialnego Audacious do obs³ugi plików
+WMA.
+
+%package input-console
+Summary:	Audacious media player - console input plugin
+Summary(pl):	Wtyczka do odtwarzania plików konsolowych odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} >= %{epoch}:%{version}-%{release}
+
+%description input-console
+SPC, GYM, NSF, VGM and GBS input plugin for Audacious media player.
+
+%description input-console -l pl
+Wtyczka dla odtwarzacza multimedialnego Audacious do obs³ugi plików
+SPC, GYM, NSF, VGM i GBS.
 
 %package output-OSS
 Summary:	Audacious media player - OSS output plugin
@@ -284,6 +310,7 @@ umask 022
 %attr(755,root,root) %{_bindir}/audacious
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/General
+%attr(755,root,root) %{_libdir}/audacious/General/libsong_change.so
 %dir %{_libdir}/audacious/Input
 %dir %{_libdir}/audacious/Output
 %dir %{_libdir}/audacious/Visualization
@@ -308,7 +335,6 @@ umask 022
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudacious.so.*.*
-%attr(755,root,root) %{_libdir}/libmp4v2.so.*.*
 
 %files static
 %defattr(644,root,root,755)
@@ -341,6 +367,14 @@ umask 022
 %files input-tonegen
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libtonegen.so
+
+%files input-wma
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libwma.so
+
+%files input-console
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libconsole.so
 
 %files output-OSS
 %defattr(644,root,root,755)
