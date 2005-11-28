@@ -13,6 +13,7 @@ Group:		Applications/Sound
 Source0:	http://audacious.nenolod.net/release/%{name}-%{version}.tgz
 # Source0-md5:	12ead38a7052ed48ae67e32c5c391f9d
 Source1:	mp3license
+Source2:	%{name}.png
 Patch0:		%{name}-xmms-skins-dir.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-home_etc.patch
@@ -346,11 +347,13 @@ Wtyczka graficzna libvisual-proxy.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/audacious/General
+install -d $RPM_BUILD_ROOT{%{_libdir}/audacious/General,%{_pixmapsdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
+
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/audacious/*/*.{a,la}
 
@@ -395,7 +398,8 @@ fi
 %{_datadir}/audacious/glade/*
 %{_datadir}/audacious/images/*
 %{_datadir}/audacious/Skins/Default
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
+%{_pixmapsdir}/*.png
 
 %files libs
 %defattr(644,root,root,755)
