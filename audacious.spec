@@ -8,6 +8,7 @@ Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	0.1.2
 Release:	1
+Epoch:		0
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://audacious.nenolod.net/release/%{name}-%{version}.tgz
@@ -34,7 +35,7 @@ BuildRequires:	libmodplug-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsidplay-devel
 BuildRequires:	libsndfile-devel
-BuildRequires:	libvisual
+BuildRequires:	libvisual-devel >= 0.2.0
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
@@ -88,12 +89,11 @@ Static version of Audacious media player library.
 %description static -l pl
 Statyczna wersja biblioteki odtwarzacza multimedialnego Audacious.
 
-
 %package effect-ladspa
 Summary:	Audacious media player - LADSPA plugin
 Summary(pl):	Wtyczka LADSPA odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description effect-ladspa
 LADSPA plugin for Audacious media player.
@@ -105,7 +105,7 @@ Wtyczka LADSPA dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - LIRC plugin
 Summary(pl):	Wtyczka LIRC odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description general-lirc
 LIRC plugin for Audacious media player.
@@ -117,7 +117,7 @@ Wtyczka LIRC dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - song change plugin
 Summary(pl):	Wtyczka zmiany utworu odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description general-song-change
 Song change plugin for Audacious media player.
@@ -129,7 +129,7 @@ Wtyczka zmiany utworu dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - AAC input plugin
 Summary(pl):	Wtyczka do odtwarzania plików AAC odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-aac
 AAC input plugin for Audacious media player.
@@ -154,7 +154,7 @@ Wtyczka wej¶ciowa cdaudio dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - console input plugin
 Summary(pl):	Wtyczka do odtwarzania plików konsolowych odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-console
 SPC, GYM, NSF, VGM and GBS input plugin for Audacious media player.
@@ -167,7 +167,7 @@ SPC, GYM, NSF, VGM i GBS.
 Summary:	Audacious media player - FLAC input plugin
 Summary(pl):	Wtyczka do odtwarzania plików FLAC odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-flac
 FLAC input plugin for Audacious media player.
@@ -217,7 +217,7 @@ Wtyczka wej¶ciowa SID dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - input plugin to generate sound of given frequency
 Summary(pl):	Wtyczka do generowania d¼wiêków o danej czêstotliwo¶ci odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-tonegen
 Input plugin to generate sound of given frequency for Audacious media
@@ -243,7 +243,7 @@ Wtyczka wej¶ciowa Vorbis dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - WAV input plugin
 Summary(pl):	Wtyczka do odtwarzania plików WAV odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-wav
 WAV input plugin for Audacious media player.
@@ -256,7 +256,7 @@ WAV.
 Summary:	Audacious media player - WMA input plugin
 Summary(pl):	Wtyczka do odtwarzania plików WMA odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description input-wma
 WMA input plugin for Audacious media player.
@@ -336,7 +336,7 @@ Wtyczka wyj¶ciowa esd dla odtwarzacza multimedialnego Audacious.
 Summary:	Audacious media player - Blur scope visualization plugin
 Summary(pl):	Wtyczka graficzna Blur scope odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description visualization-blur-scope
 Blur scope visualization plugin.
@@ -348,7 +348,7 @@ Wtyczka graficzna Blur scope.
 Summary:	Audacious media player - libvisual-proxy visualization plugin
 Summary(pl):	Wtyczka graficzna libvisual-proxy odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	%{name} >= %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description visualization-libvisual-proxy
 libvisual-proxy visualization plugin.
