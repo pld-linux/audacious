@@ -1,9 +1,10 @@
---- audacious-0.1/audacious/audacious.desktop.in~	2005-10-24 12:06:47.000000000 +0200
-+++ audacious-0.1/audacious/audacious.desktop.in	2005-11-16 07:47:30.308283072 +0100
-@@ -1,10 +1,12 @@
- [Desktop Entry]
+diff -aurN audacious-0.2.orig/audacious/audacious.desktop.in audacious-0.2/audacious/audacious.desktop.in
+--- audacious-0.2.orig/audacious/audacious.desktop.in	2006-01-03 22:05:01.000000000 +0100
++++ audacious-0.2/audacious/audacious.desktop.in	2006-02-09 17:07:53.848956736 +0100
+@@ -2,10 +2,11 @@
  Name=Audacious
  Comment=Play music
+ Comment[hu]=Zene lejátszása
 +Comment[pl]=Odtwarzacz muzyki
  Exec=audacious
 -Icon=audacious.png
@@ -14,4 +15,3 @@
  Terminal=false
  Type=Application
  Encoding=UTF-8
-+# vi: encoding=utf-8
