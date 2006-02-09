@@ -6,32 +6,35 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	0.1.2
-Release:	1
+Version:	0.2
+Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Applications/Sound
-Source0:	http://audacious.nenolod.net/release/%{name}-%{version}.tgz
-# Source0-md5:	df8ebff8d60c5d48d2685dd4bb06ad88
+Source0:	http://audacious-media-player.org/release/audacious-0.2.tgz
+# Source0-md5:	42ecd9753684929482e598a0a7170147
 Source1:	mp3license
 Source2:	%{name}.png
 Patch0:		%{name}-xmms-skins-dir.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-home_etc.patch
-URL:		http://audacious.nenolod.net/
+URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:  GConf2-devel >= 2.6.0}
+BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
-BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel >= 0.2.8
 BuildRequires:	flac-devel >= 1.1.2
 %{?with_gnome_vfs:BuildRequires:  gnome-vfs2-devel >= 2.6.0}
-BuildRequires:	gtk+2-devel >= 2:2.4.0
+BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	id3lib-devel
+BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	libbinio-devel >= 1.4
 BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libmodplug-devel
+BuildRequires:	libmpcdec-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	libsidplay-devel
 BuildRequires:	libsndfile-devel
@@ -39,6 +42,7 @@ BuildRequires:	libvisual-devel >= 0.2.0
 BuildRequires:	libvorbis-devel >= 1:1.0
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
+BuildRequires:	taglib-devel
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	audacious-output-plugin
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -138,6 +142,32 @@ AAC input plugin for Audacious media player.
 Wtyczka dla odtwarzacza multimedialnego Audacious do obs³ugi plików
 AAC.
 
+%package input-adplug
+Summary:	Audacious media player - Adplug input plugin
+Summary(pl):	Wtyczka do odtwarzania plików Adplug odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description input-adplug
+Adplug input plugin for Audacious media player.
+
+%description input-adplug -l pl
+Wtyczka dla odtwarzacza multimedialnego Audacious do obs³ugi plików
+Adplug.
+
+%package input-amidi
+Summary:	Audacious media player - midi input plugin
+Summary(pl):	Wtyczka do odtwarzania plików midi odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description input-amidi
+ALSA midi input plugin for Audacious media player.
+
+%description input-amidi -l pl
+Wtyczka dla odtwarzacza multimedialnego Audacious do obs³ugi plików
+midi poprzez ALSA.
+
 %package input-cdaudio
 Summary:	Audacious media player - cdaudio input plugin
 Summary(pl):	Wtyczka wej¶ciowa cdaudio odtwarzacza multimedialnego Audacious
@@ -189,6 +219,19 @@ modplug input plugin for Audacious media player.
 %description input-modplug -l pl
 Wtyczka wej¶ciowa modplug dla odtwarzacza multimedialnego Audacious.
 
+%package input-mpc
+Summary:	Audacious media player - mpc input plugin
+Summary(pl):	Wtyczka wej¶ciowa mpc odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Obsoletes:	audacious-input-mikmod
+
+%description input-mpc
+Musepack input plugin for Audacious media player.
+
+%description input-mpc -l pl
+Wtyczka wej¶ciowa Musepack dla odtwarzacza multimedialnego Audacious.
+
 %package input-mpg123
 Summary:	Audacious media player - mpg123 input plugin
 Summary(pl):	Wtyczka wej¶ciowa mpg123 odtwarzacza multimedialnego Audacious
@@ -201,6 +244,19 @@ mpg123 input plugin for Audacious media player.
 %description input-mpg123 -l pl
 Wtyczka wej¶ciowa mpg123 dla odtwarzacza multimedialnego Audacious.
 
+%package input-sexypsf
+Summary:	Audacious media player - sexypsf input plugin
+Summary(pl):	Wtyczka wej¶ciowa sexypsf odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description input-sexypsf
+Playstation music input plugin for Audacious media player.
+
+%description input-sexypsf -l pl
+Wtyczka wej¶ciowa do odgrywania plików muzycznych w formacie
+Playstation dla odtwarzacza multimedialnego Audacious.
+
 %package input-sid
 Summary:	Audacious media player - SID input plugin
 Summary(pl):	Wtyczka wej¶ciowa SID odtwarzacza multimedialnego Audacious
@@ -212,6 +268,18 @@ SID input plugin for Audacious media player.
 
 %description input-sid -l pl
 Wtyczka wej¶ciowa SID dla odtwarzacza multimedialnego Audacious.
+
+%package input-timidity
+Summary:	Audacious media player - Timidity input plugin
+Summary(pl):	Wtyczka wej¶ciowa Timidity odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description input-timidity
+Timidity input plugin for Audacious media player.
+
+%description input-timidity -l pl
+Wtyczka wej¶ciowa Timidity dla odtwarzacza multimedialnego Audacious.
 
 %package input-tonegen
 Summary:	Audacious media player - input plugin to generate sound of given frequency
@@ -332,6 +400,19 @@ Output esd plugin for Audacious media player.
 %description output-esd -l pl
 Wtyczka wyj¶ciowa esd dla odtwarzacza multimedialnego Audacious.
 
+%package output-jack
+Summary:	Audacious media player - JACK output plugin
+Summary(pl):	Wtyczka wyj¶ciowa JACK odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Provides:	audacious-output-plugin
+
+%description output-jack
+Output JACK plugin for Audacious media player.
+
+%description output-jack -l pl
+Wtyczka wyj¶ciowa JACK dla odtwarzacza multimedialnego Audacious.
+
 %package visualization-blur-scope
 Summary:	Audacious media player - Blur scope visualization plugin
 Summary(pl):	Wtyczka graficzna Blur scope odtwarzacza multimedialnego Audacious
@@ -382,7 +463,8 @@ Wtyczka graficzna libvisual-proxy.
 	--enable-gconf \
 %endif
 	--enable-shared \
-	--enable-static
+	--enable-static \
+	--enable-amidiplug
 %{__make}
 
 %install
@@ -472,6 +554,14 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libaac.so
 
+%files input-adplug
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libadplug.so
+
+%files input-amidi
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libamidi-plug.so
+
 %files input-cdaudio
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libcdaudio.so
@@ -484,21 +574,33 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libflac.so
 
+%files input-mpc
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libmpc.so
+
+%files input-mpg123
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libmpg123.so
+
 %files input-modplug
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libmodplug.so
+
+%files input-sexypsf
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libsexypsf.so
 
 %files input-sid
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libsid.so
 
+%files input-timidity
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Input/libtimidity.so
+
 %files input-tonegen
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Input/libtonegen.so
-
-%files input-mpg123
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Input/libmpg123.so
 
 %files input-vorbis
 %defattr(644,root,root,755)
@@ -527,6 +629,10 @@ fi
 %files output-esd
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Output/libesdout.so
+
+%files output-jack
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Output/libjackout.so
 
 %files output-oss
 %defattr(644,root,root,755)
