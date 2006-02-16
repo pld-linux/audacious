@@ -15,9 +15,8 @@ Source0:	http://audacious-media-player.org/release/audacious-0.2.tgz
 # Source0-md5:	42ecd9753684929482e598a0a7170147
 Source1:	mp3license
 Source2:	%{name}.png
-Patch0:		%{name}-xmms-skins-dir.patch
-Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-home_etc.patch
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:  GConf2-devel >= 2.6.0}
 BuildRequires:	Mesa-libGLU-devel
@@ -441,7 +440,6 @@ Wtyczka graficzna libvisual-proxy.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__aclocal} -I m4
