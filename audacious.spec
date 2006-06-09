@@ -374,10 +374,10 @@ Wtyczka wyj¶ciowa OSS dla odtwarzacza multimedialnego Audacious.
 
 %package output-disk
 Summary:	Audacious media player - disk-writer output plugin
-Summary(pl):    Wtyczka wyj¶ciowa zapisu na dysk odtwarzacza multimedialnego Audacious
-Group:          X11/Applications/Sound
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Provides:       audacious-output-plugin
+Summary(pl):	Wtyczka wyj¶ciowa zapisu na dysk odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Provides:	audacious-output-plugin
 
 %description output-disk
 Output disk-writer plugin for Audacious media player.
