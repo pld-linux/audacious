@@ -6,26 +6,26 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl):	Odtwarzacz d¼wiêku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	0.2
+Version:	1.1.1
 Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Applications/Sound
-Source0:	http://audacious-media-player.org/release/audacious-0.2.tgz
-# Source0-md5:	42ecd9753684929482e598a0a7170147
+Source0:	http://audacious-media-player.org/release/%{name}-%{version}.tgz
+# Source0-md5:	e9108f71725cf8336f7b965424c285f8
 Source1:	mp3license
 Source2:	%{name}.png
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-home_etc.patch
+#Patch1: %{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
-%{?with_gconf:BuildRequires:  GConf2-devel >= 2.6.0}
+%{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	Mesa-libGLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	esound-devel >= 0.2.8
 BuildRequires:	flac-devel >= 1.1.2
-%{?with_gnome_vfs:BuildRequires:  gnome-vfs2-devel >= 2.6.0}
+%{?with_gnome_vfs:BuildRequires:	gnome-vfs2-devel >= 2.6.0}
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	id3lib-devel
@@ -103,6 +103,42 @@ LADSPA plugin for Audacious media player.
 
 %description effect-ladspa -l pl
 Wtyczka LADSPA dla odtwarzacza multimedialnego Audacious.
+
+%package effect-audiocompress
+Summary:        Audacious media player - audiocompress plugin
+Summary(pl):    Wtyczka audiocompress odtwarzacza multimedialnego Audacious
+Group:          X11/Applications/Sound
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description effect-audiocompress
+audiocompress plugin for Audacious media player.
+
+%description effect-audiocompress -l pl
+Wtyczka audiocompress dla odtwarzacza multimedialnego Audacious.
+
+%package effect-stereo
+Summary:        Audacious media player - stereo plugin
+Summary(pl):    Wtyczka stereo odtwarzacza multimedialnego Audacious
+Group:          X11/Applications/Sound
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description effect-stereo
+stereo plugin for Audacious media player.
+
+%description effect-stereo -l pl
+Wtyczka stereo dla odtwarzacza multimedialnego Audacious.
+
+%package effect-voice_removal
+Summary:       Audacious media player - voice_removal plugin
+Summary(pl):    Wtyczka voice_removal odtwarzacza multimedialnego Audacious
+Group:          X11/Applications/Sound
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description effect-voice_removal
+voice_removal plugin for Audacious media player.
+
+%description effect-voice_removal -l pl
+Wtyczka voice_removal dla odtwarzacza multimedialnego Audacious.
 
 %package general-lirc
 Summary:	Audacious media player - LIRC plugin
@@ -346,18 +382,6 @@ Output ALSA plugin for Audacious media player.
 %description output-alsa -l pl
 Wtyczka wyj¶ciowa ALSA dla odtwarzacza multimedialnego Audacious.
 
-%package output-crossfade
-Summary:	Audacious media player - crossfade output plugin
-Summary(pl):	Wtyczka wyj¶ciowa crossfade odtwarzacza multimedialnego Audacious
-Group:		X11/Applications/Sound
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description output-crossfade
-Output crossfade plugin for Audacious media player.
-
-%description output-crossfade -l pl
-Wtyczka wyj¶ciowa crossfade dla odtwarzacza multimedialnego Audacious.
-
 %package output-oss
 Summary:	Audacious media player - OSS output plugin
 Summary(pl):	Wtyczka wyj¶ciowa OSS odtwarzacza multimedialnego Audacious
@@ -399,12 +423,26 @@ Output esd plugin for Audacious media player.
 %description output-esd -l pl
 Wtyczka wyj¶ciowa esd dla odtwarzacza multimedialnego Audacious.
 
-%package output-jack
-Summary:	Audacious media player - JACK output plugin
-Summary(pl):	Wtyczka wyj¶ciowa JACK odtwarzacza multimedialnego Audacious
+%package output-arts
+Summary:	Audacious media player - ARTS output plugin
+Summary(pl):	Wtyczka wyj¶ciowa ARTS odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	audacious-output-plugin
+
+%description output-arts
+Output arts plugin for Audacious media player.
+
+%description output-arts -l pl
+Wtyczka wyj¶ciowa arts dla odtwarzacza multimedialnego Audacious.
+
+%package output-jack
+Summary:        Audacious media player - JACK output plugin
+Summary(pl):    Wtyczka wyj¶ciowa JACK odtwarzacza multimedialnego Audacious
+Group:          X11/Applications/Sound
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+Provides:       audacious-output-plugin
+
 
 %description output-jack
 Output JACK plugin for Audacious media player.
@@ -424,28 +462,15 @@ Blur scope visualization plugin.
 %description visualization-blur-scope -l pl
 Wtyczka graficzna Blur scope.
 
-%package visualization-libvisual-proxy
-Summary:	Audacious media player - libvisual-proxy visualization plugin
-Summary(pl):	Wtyczka graficzna libvisual-proxy odtwarzacza multimedialnego Audacious
-Group:		X11/Applications/Sound
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description visualization-libvisual-proxy
-libvisual-proxy visualization plugin.
-
-%description visualization-libvisual-proxy -l pl
-Wtyczka graficzna libvisual-proxy.
-
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
-%{__automake}
+#%{__automake}
 %configure \
 %ifarch %{ix86}
 %ifnarch i386 i486
@@ -489,12 +514,12 @@ you want to play!
 EOF
 
 umask 022
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+[ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
 if [ $1 = 0 ]; then
     umask 022
-    [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+    [ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1
 fi
 
 %post	libs -p /sbin/ldconfig
@@ -503,6 +528,8 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/audacious
+%attr(755,root,root) %{_bindir}/audacious-arts-helper
+%attr(755,root,root) %{_bindir}/audtool
 %dir %{_libdir}/audacious
 %dir %{_libdir}/audacious/General
 %dir %{_libdir}/audacious/Input
@@ -528,17 +555,29 @@ fi
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudacious.so
-%{_libdir}/lib*.la
+#%{_libdir}/lib*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+#%{_libdir}/lib*.a
 
 %files effect-ladspa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Effect/libladspa.so
+
+%files effect-audiocompress
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Effect/libaudiocompress.so
+
+%files effect-voice_removal
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Effect/libvoice_removal.so
+
+%files effect-stereo
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Effect/libstereo.so
 
 %files general-lirc
 %defattr(644,root,root,755)
@@ -616,21 +655,21 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Output/libALSA.so
 
-%files output-crossfade
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libcrossfade.so*
-
 %files output-disk
-%defattr(644,root,755)
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Output/libdisk_writer.so
 
 %files output-esd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Output/libesdout.so
+%attr(755,root,root) %{_libdir}/audacious/Output/libESD.so
 
 %files output-jack
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Output/libjackout.so
+
+%files output-arts
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/audacious/Output/libarts.so
 
 %files output-oss
 %defattr(644,root,root,755)
@@ -639,7 +678,3 @@ fi
 %files visualization-blur-scope
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/audacious/Visualization/libbscope.so
-
-%files visualization-libvisual-proxy
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/audacious/Visualization/libvisual_proxy.so
