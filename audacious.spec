@@ -19,7 +19,7 @@ Patch0:		%{name}-desktop.patch
 #Patch1: %{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
-BuildRequires:	Mesa-libGLU-devel
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -105,10 +105,10 @@ LADSPA plugin for Audacious media player.
 Wtyczka LADSPA dla odtwarzacza multimedialnego Audacious.
 
 %package effect-audiocompress
-Summary:        Audacious media player - audiocompress plugin
-Summary(pl):    Wtyczka audiocompress odtwarzacza multimedialnego Audacious
-Group:          X11/Applications/Sound
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:	Audacious media player - audiocompress plugin
+Summary(pl):	Wtyczka audiocompress odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description effect-audiocompress
 audiocompress plugin for Audacious media player.
@@ -117,10 +117,10 @@ audiocompress plugin for Audacious media player.
 Wtyczka audiocompress dla odtwarzacza multimedialnego Audacious.
 
 %package effect-stereo
-Summary:        Audacious media player - stereo plugin
-Summary(pl):    Wtyczka stereo odtwarzacza multimedialnego Audacious
-Group:          X11/Applications/Sound
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:	Audacious media player - stereo plugin
+Summary(pl):	Wtyczka stereo odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description effect-stereo
 stereo plugin for Audacious media player.
@@ -129,10 +129,10 @@ stereo plugin for Audacious media player.
 Wtyczka stereo dla odtwarzacza multimedialnego Audacious.
 
 %package effect-voice_removal
-Summary:       Audacious media player - voice_removal plugin
-Summary(pl):    Wtyczka voice_removal odtwarzacza multimedialnego Audacious
-Group:          X11/Applications/Sound
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:	Audacious media player - voice_removal plugin
+Summary(pl):	Wtyczka voice_removal odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description effect-voice_removal
 voice_removal plugin for Audacious media player.
@@ -437,11 +437,11 @@ Output arts plugin for Audacious media player.
 Wtyczka wyj¶ciowa arts dla odtwarzacza multimedialnego Audacious.
 
 %package output-jack
-Summary:        Audacious media player - JACK output plugin
-Summary(pl):    Wtyczka wyj¶ciowa JACK odtwarzacza multimedialnego Audacious
-Group:          X11/Applications/Sound
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Provides:       audacious-output-plugin
+Summary:	Audacious media player - JACK output plugin
+Summary(pl):	Wtyczka wyj¶ciowa JACK odtwarzacza multimedialnego Audacious
+Group:		X11/Applications/Sound
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Provides:	audacious-output-plugin
 
 
 %description output-jack
