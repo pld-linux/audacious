@@ -1,6 +1,6 @@
-diff -aurN audacious-0.2.orig/audacious/audacious.desktop.in audacious-0.2/audacious/audacious.desktop.in
---- audacious-0.2.orig/audacious/audacious.desktop.in	2006-01-03 22:05:01.000000000 +0100
-+++ audacious-0.2/audacious/audacious.desktop.in	2006-02-09 17:07:53.848956736 +0100
+diff -urN audacious-1.2.2/audacious/audacious.desktop.in audacious-1.2.2.new/audacious/audacious.desktop.in
+--- audacious-1.2.2/audacious/audacious.desktop.in	2006-11-16 20:46:06.000000000 +0100
++++ audacious-1.2.2.new/audacious/audacious.desktop.in	2006-11-19 13:55:33.000000000 +0100
 @@ -2,10 +2,11 @@
  Name=Audacious
  Comment=Play music
@@ -9,7 +9,7 @@ diff -aurN audacious-0.2.orig/audacious/audacious.desktop.in audacious-0.2/audac
  Exec=audacious
 -Icon=audacious.png
 +Icon=audacious
- MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg;
+ MimeType=application/x-ogg;audio/mp3;audio/mpeg;audio/mpegurl;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;application/ogg;audio/x-vorbis+ogg
 -Categories=Application;GTK;AudioVideo;Player;
 +Categories=GTK;Audio;Player;
  Terminal=false
