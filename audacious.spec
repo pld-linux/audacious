@@ -3,7 +3,7 @@
 %bcond_with	gconf		# build without gconf support
 #
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
-Summary(pl):	Odtwarzacz dºwiÍku z interfejsem WinAmpa dla GTK+2
+Summary(pl.UTF-8):   Odtwarzacz d≈∫wiƒôku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.2.2
 Release:	1
@@ -34,24 +34,24 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Audacious is a media player based on BMP. Since the development of the
 former project had been terminated, this fork was created.
 
-%description -l pl
-Audacious to odtwarzacz mediÛw oparty na BMP. Powsta≥ on poniewaø
-rozwÛj pierwowzoru zosta≥ zakoÒczony.
+%description -l pl.UTF-8
+Audacious to odtwarzacz medi√≥w oparty na BMP. Powsta≈Ç on poniewa≈º
+rozw√≥j pierwowzoru zosta≈Ç zako≈Ñczony.
 
 %package libs
 Summary:	Audacious media player library
-Summary(pl):	Biblioteka odtwarzacza multimedialnego Audacious
+Summary(pl.UTF-8):   Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 
 %description libs
 Audacious media player library.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteka odtwarzacza multimedialnego Audacious.
 
 %package devel
 Summary:	Header files for Audacious media player
-Summary(pl):	Pliki nag≥Ûwkowe odtwarzacza multimedialnego Audacious
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.0
@@ -60,8 +60,8 @@ Requires:	home-etc-devel
 %description devel
 Header files required for compiling Audacious media player plugins.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe potrzebne do kompilowania wtyczek odtwarzacza
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe potrzebne do kompilowania wtyczek odtwarzacza
 multimedialnego Audacious.
 
 %prep
