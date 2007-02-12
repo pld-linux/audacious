@@ -3,7 +3,7 @@
 %bcond_with	gconf		# build without gconf support
 #
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
-Summary(pl.UTF-8):   Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
+Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.2.2
 Release:	1
@@ -40,7 +40,7 @@ rozwój pierwowzoru został zakończony.
 
 %package libs
 Summary:	Audacious media player library
-Summary(pl.UTF-8):   Biblioteka odtwarzacza multimedialnego Audacious
+Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 
 %description libs
@@ -51,7 +51,7 @@ Biblioteka odtwarzacza multimedialnego Audacious.
 
 %package devel
 Summary:	Header files for Audacious media player
-Summary(pl.UTF-8):   Pliki nagłówkowe odtwarzacza multimedialnego Audacious
+Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.0
