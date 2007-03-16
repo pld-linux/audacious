@@ -2,15 +2,16 @@
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
 #
+
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	1.2.2
+Version:	1.3.1
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://audacious-media-player.org/release/%{name}-%{version}.tgz
-# Source0-md5:	e774afbda04220e6e1b0a9bff350522e
+Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}.tgz
+# Source0-md5:	6dd04268a8b52a991cd1f561e27dca16
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -22,6 +23,8 @@ BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	gettext-devel
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
+BuildRequires:	libstdc++-devel
+BuildRequires:	mcs-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires:	%{name}-libs = %{version}-%{release}
@@ -124,12 +127,15 @@ EOF
 %dir %{_datadir}/audacious/images
 %{_datadir}/audacious/images/*
 %{_datadir}/audacious/Skins
+%{_datadir}/audacious/ui
 %{_desktopdir}/*.desktop
 %{_pixmapsdir}/*.png
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudacious.so.*.*
+%dir %{_libdir}/audacious
+%attr(755,root,root) %{_libdir}/audacious/libaudid3tag.so
 
 %files devel
 %defattr(644,root,root,755)
