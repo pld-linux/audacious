@@ -19,17 +19,17 @@ URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	gettext-devel
+BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
+Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
-Requires(post,postun):	desktop-file-utils
 Obsoletes:	audacious-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
