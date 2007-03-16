@@ -133,7 +133,7 @@ EOF
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudacious.so.*.*
+%attr(755,root,root) %{_libdir}/libaudacious.so.*
 %dir %{_libdir}/audacious
 %attr(755,root,root) %{_libdir}/audacious/libaudid3tag.so
 
