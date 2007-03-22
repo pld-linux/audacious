@@ -59,6 +59,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.0
 Requires:	home-etc-devel
+Requires:	mcs-devel
 
 %description devel
 Header files required for compiling Audacious media player plugins.
