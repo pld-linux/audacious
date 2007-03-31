@@ -7,7 +7,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.3.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}.tgz
