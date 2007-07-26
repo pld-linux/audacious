@@ -1,22 +1,17 @@
 #
-# TODO
-# - exclude audtool to separate package
-#
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
 #
 
-%define _dr	dr1
-
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	1.4.0
-Release:	0.%{_dr}.1
+Version:	1.3.2
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}-%{_dr}.tgz
-# Source0-md5:	dcc25e836194e3ed351a8fff79d61cf9
+Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}.tgz
+# Source0-md5:	b784a30604a2f9d84e9da310069f43f9
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -24,8 +19,6 @@ URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	dbus-devel >= 0.60
-BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
@@ -76,11 +69,9 @@ Pliki nagłówkowe potrzebne do kompilowania wtyczek odtwarzacza
 multimedialnego Audacious.
 
 %prep
-%setup -q -n %{name}-%{version}-%{_dr}
+%setup -q
 %patch0 -p1
 %patch1 -p1
-# BUGFIX: http://bugs-meta.atheme-project.org/view.php?id=736
-echo 'const char *svn_stamp = "release";\n' > src/audacious/build_stamp.c
 
 %build
 %{__aclocal} -I m4
@@ -143,14 +134,13 @@ EOF
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
+%attr(755,root,root) %{_libdir}/libaudacious.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudacious.so.?
 %dir %{_libdir}/audacious
 %attr(755,root,root) %{_libdir}/audacious/libaudid3tag.so
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudclient.so
+%attr(755,root,root) %{_libdir}/libaudacious.so
 %{_includedir}/audacious
 %{_pkgconfigdir}/audacious.pc
-%{_pkgconfigdir}/audclient.pc
