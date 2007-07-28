@@ -30,6 +30,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
+BuildRequires:	libmowgli-devel >= 0.3.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel
 BuildRequires:	pkgconfig
