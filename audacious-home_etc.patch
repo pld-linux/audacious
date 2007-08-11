@@ -1,13 +1,15 @@
---- audacious-1.3.0/src/audacious/Makefile	2007-01-26 18:58:10.000000000 +0100
-+++ audacious-1.3.0/src/audacious/Makefile	2007-01-26 18:59:45.000000000 +0100
-@@ -15,6 +15,7 @@
- 	$(GTK_LIBS) \
+--- audacious-1.4.0/src/audacious/Makefile	2007-01-26 18:58:10.000000000 +0100
++++ audacious-1.4.0/src/audacious/Makefile	2007-01-26 18:59:45.000000000 +0100
+@@ -17,7 +17,8 @@
+ 	$(MOWGLI_LIBS) \
+ 	$(LIBMCS_LIBS) \
  	$(LIBGLADE_LIBS) \
- 	$(REGEX_LIBS) \
-+	-lhome_etc \
- 	./widgets/libwidgets.a
+-	$(REGEX_LIBS)
++	$(REGEX_LIBS) \
++	-lhome_etc
  
  CFLAGS += \
+ 	$(MOWGLI_CFLAGS) \
 --- audacious-1.3.0/src/audacious/configdb.h	2007-01-26 18:58:10.000000000 +0100
 +++ audacious-1.3.0/src/audacious/configdb.h	2007-01-26 19:01:51.000000000 +0100
 @@ -2,6 +2,7 @@
