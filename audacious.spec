@@ -6,7 +6,7 @@
 %bcond_with	gconf		# build without gconf support
 #
 
-%define _dr	dr1
+%define _dr	dr2
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
@@ -15,8 +15,8 @@ Version:	1.4.0
 Release:	0.%{_dr}.1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}-%{_dr}.tgz
-# Source0-md5:	dcc25e836194e3ed351a8fff79d61cf9
+Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tgz
+# Source0-md5:	9989bb250fd182527fbffbf0a386629b
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
