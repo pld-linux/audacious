@@ -95,7 +95,7 @@ echo 'const char *svn_stamp = "release";\n' > src/audacious/build_stamp.c
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/audacious/{Container,Effect,General,Input,Output,Visualization}
+install -d $RPM_BUILD_ROOT%{_libdir}/audacious/{Container,Effect,General,Input,Output,Transport,Visualization}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
