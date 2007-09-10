@@ -129,6 +129,7 @@ EOF
 %dir %{_libdir}/audacious/General
 %dir %{_libdir}/audacious/Input
 %dir %{_libdir}/audacious/Output
+%dir %{_libdir}/audacious/Transport
 %dir %{_libdir}/audacious/Visualization
 
 %{_mandir}/man*/*
