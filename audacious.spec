@@ -6,7 +6,7 @@
 %bcond_with	gconf		# build without gconf support
 #
 
-%define _dr	dr3
+%define _dr	dr4
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
@@ -16,7 +16,7 @@ Release:	0.%{_dr}.1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tgz
-# Source0-md5:	2d41a2a5a0d2323eb9334ed2aae2ccab
+# Source0-md5:	901cd58fb103d0b1f2339cf1ea71d82a
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -32,7 +32,7 @@ BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libmowgli-devel >= 0.4.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	mcs-devel
+BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
