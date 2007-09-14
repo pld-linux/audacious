@@ -12,7 +12,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.4.0
-Release:	0.%{_dr}.1
+Release:	0.%{_dr}.2
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tgz
@@ -31,6 +31,7 @@ BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libmowgli-devel >= 0.4.0
+BuildRequires:	libsamplerate
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
@@ -89,6 +90,7 @@ echo 'const char *svn_stamp = "release";\n' > src/audacious/build_stamp.c
 %{__autoheader}
 %configure \
 	--%{?with_gconf:en}%{!?with_gconf:dis}able-gconf \
+	--enable-samplerate \
 	--enable-shared
 
 %{__make}
