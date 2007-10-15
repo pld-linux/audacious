@@ -1,22 +1,19 @@
-#
 # TODO
 # - exclude audtool to separate package
 #
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
-#
 
-%define _dr	dr4
-
+%define _dr	beta1
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.4.0
-Release:	0.%{_dr}.2
+Release:	0.%{_dr}.1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tgz
-# Source0-md5:	901cd58fb103d0b1f2339cf1ea71d82a
+Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tbz2
+# Source0-md5:	4e05d466fe9934e36a07c56d104781cd
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -31,7 +28,7 @@ BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libmowgli-devel >= 0.4.0
-BuildRequires:	libsamplerate
+BuildRequires:	libsamplerate-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
@@ -40,6 +37,7 @@ Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
 Obsoletes:	audacious-static
+Obsoletes:	audacious-visualization-rovascope
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -81,8 +79,6 @@ multimedialnego Audacious.
 %setup -q -n %{name}-%{version}-%{_dr}
 %patch0 -p1
 %patch1 -p1
-# BUGFIX: http://bugs-meta.atheme-project.org/view.php?id=736
-echo 'const char *svn_stamp = "release";\n' > src/audacious/build_stamp.c
 
 %build
 %{__aclocal} -I m4
@@ -101,6 +97,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/audacious/{Container,Effect,General,Input,O
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# there is already .desktop in %{_desktopdir}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/audacious/applications
 
 %find_lang %{name}
 
@@ -133,9 +132,7 @@ EOF
 %dir %{_libdir}/audacious/Output
 %dir %{_libdir}/audacious/Transport
 %dir %{_libdir}/audacious/Visualization
-
 %{_mandir}/man*/*
-
 %dir %{_datadir}/audacious
 %{_datadir}/audacious/glade
 %dir %{_datadir}/audacious/images
@@ -149,12 +146,13 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
 %ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
-%dir %{_libdir}/audacious
-%attr(755,root,root) %{_libdir}/audacious/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so
+%attr(755,root,root) %{_libdir}/libaudid3tag.so
 %{_includedir}/audacious
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
