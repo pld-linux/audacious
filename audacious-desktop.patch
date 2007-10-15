@@ -1,6 +1,5 @@
-diff -urN audacious-1.2.2/src/audacious/audacious.desktop.in audacious-1.2.2.new/src/audacious/audacious.desktop.in
---- audacious-1.2.2/src/audacious/audacious.desktop.in	2006-11-16 20:46:06.000000000 +0100
-+++ audacious-1.2.2.new/src/audacious/audacious.desktop.in	2006-11-19 13:55:33.000000000 +0100
+--- audacious-1.4/audacious.desktop	2006-11-16 20:46:06.000000000 +0100
++++ audacious-1.4/audacious.desktop	2006-11-19 13:55:33.000000000 +0100
 @@ -2,10 +2,11 @@
  Name=Audacious
  Comment=Play music
