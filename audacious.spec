@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
 
-%define _dr	beta1
+%define _dr	beta2
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
@@ -13,7 +13,7 @@ Release:	0.%{_dr}.1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tbz2
-# Source0-md5:	4e05d466fe9934e36a07c56d104781cd
+# Source0-md5:	a582c9d561227cbc0cf5c0c4495b2d22
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
