@@ -4,7 +4,7 @@
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
 
-%define _dr	beta2
+%define _dr	beta4
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
@@ -13,7 +13,7 @@ Release:	0.%{_dr}.1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}-%{_dr}.tbz2
-# Source0-md5:	a582c9d561227cbc0cf5c0c4495b2d22
+# Source0-md5:	6fb9b8b08740fa572bfad969d33026be
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -93,7 +93,7 @@ multimedialnego Audacious.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/audacious/{Container,Effect,General,Input,Output,Transport,Visualization}
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Output,Transport,Visualization}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -124,14 +124,6 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/audacious
 %attr(755,root,root) %{_bindir}/audtool
-%dir %{_libdir}/audacious
-%dir %{_libdir}/audacious/Container
-%dir %{_libdir}/audacious/Effect
-%dir %{_libdir}/audacious/General
-%dir %{_libdir}/audacious/Input
-%dir %{_libdir}/audacious/Output
-%dir %{_libdir}/audacious/Transport
-%dir %{_libdir}/audacious/Visualization
 %{_mandir}/man*/*
 %dir %{_datadir}/audacious
 %{_datadir}/audacious/glade
@@ -146,13 +138,21 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
 %ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
-%attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Container
+%dir %{_libdir}/%{name}/Effect
+%dir %{_libdir}/%{name}/General
+%dir %{_libdir}/%{name}/Input
+%dir %{_libdir}/%{name}/Output
+%dir %{_libdir}/%{name}/Transport
+%dir %{_libdir}/%{name}/Visualization
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.*.*.*
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.?
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so
-%attr(755,root,root) %{_libdir}/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so
 %{_includedir}/audacious
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
