@@ -38,6 +38,8 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
 Obsoletes:	audacious-static
 Obsoletes:	audacious-visualization-rovascope
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -101,6 +103,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 # there is already .desktop in %{_desktopdir}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/audacious/applications
 
+[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
+	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 %find_lang %{name}
 
 %clean
