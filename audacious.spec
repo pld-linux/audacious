@@ -37,11 +37,14 @@ Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
 Obsoletes:	audacious-general-curl
+Obsoletes:	audacious-general-notify#
 Obsoletes:	audacious-input-cdaudio
+Obsoletes:	audacious-input-cube#
 Obsoletes:	audacious-input-flac
 Obsoletes:	audacious-input-mikmod
 Obsoletes:	audacious-input-mpc
 Obsoletes:	audacious-input-mpg123
+Obsoletes:	audacious-input-mplayer#
 Obsoletes:	audacious-input-sap
 Obsoletes:	audacious-output-ALSA
 Obsoletes:	audacious-output-OSS
@@ -49,6 +52,7 @@ Obsoletes:	audacious-output-disk
 Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
+Obsoletes:	audacious-visualization-iris#
 Obsoletes:	audacious-visualization-rovascope
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
