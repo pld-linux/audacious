@@ -1,5 +1,3 @@
-# TODO
-# - exclude audtool to separate package
 #
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
@@ -8,7 +6,7 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	1.4.0
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
@@ -35,7 +33,22 @@ BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
+Obsoletes:	audacious-container-mms
+Obsoletes:	audacious-container-stdio
+Obsoletes:	audacious-general-audioscrobbler
+Obsoletes:	audacious-general-curl
+Obsoletes:	audacious-input-cdaudio
+Obsoletes:	audacious-input-flac
+Obsoletes:	audacious-input-mikmod
+Obsoletes:	audacious-input-mpc
+Obsoletes:	audacious-input-mpg123
+Obsoletes:	audacious-input-sap
+Obsoletes:	audacious-output-ALSA
+Obsoletes:	audacious-output-OSS
+Obsoletes:	audacious-output-disk
+Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
+Obsoletes:	audacious-transport-curl
 Obsoletes:	audacious-visualization-rovascope
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
