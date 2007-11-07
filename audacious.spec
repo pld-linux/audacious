@@ -1,17 +1,16 @@
 #
 # Conditional build:
 %bcond_with	gconf		# build without gconf support
-#
 
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	1.3.2
-Release:	2
+Version:	1.4.0
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://static.audacious-media-player.org/release/%{name}-%{version}.tgz
-# Source0-md5:	b784a30604a2f9d84e9da310069f43f9
+Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
+# Source0-md5:	75b34e88cd2c4b335a2f18070bae56f6
 Source1:	mp3license
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
@@ -19,18 +18,42 @@ URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	dbus-devel >= 0.60
+BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
 BuildRequires:	libglade2-devel >= 2.3.1
+BuildRequires:	libmowgli-devel >= 0.4.0
+BuildRequires:	libsamplerate-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	mcs-devel
+BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
+Obsoletes:	audacious-container-mms
+Obsoletes:	audacious-container-stdio
+Obsoletes:	audacious-general-audioscrobbler
+Obsoletes:	audacious-general-curl
+Obsoletes:	audacious-general-notify#
+Obsoletes:	audacious-input-cdaudio
+Obsoletes:	audacious-input-cube#
+Obsoletes:	audacious-input-flac
+Obsoletes:	audacious-input-mikmod
+Obsoletes:	audacious-input-mpc
+Obsoletes:	audacious-input-mpg123
+Obsoletes:	audacious-input-mplayer#
+Obsoletes:	audacious-input-sap
+Obsoletes:	audacious-output-ALSA
+Obsoletes:	audacious-output-OSS
+Obsoletes:	audacious-output-disk
+Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
+Obsoletes:	audacious-transport-curl
+Obsoletes:	audacious-visualization-iris#
+Obsoletes:	audacious-visualization-rovascope
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -81,16 +104,20 @@ multimedialnego Audacious.
 %{__autoheader}
 %configure \
 	--%{?with_gconf:en}%{!?with_gconf:dis}able-gconf \
+	--enable-samplerate \
 	--enable-shared
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/audacious/{Container,Effect,General,Input,Output,Visualization}
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Output,Transport,Visualization}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# there is already .desktop in %{_desktopdir}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/audacious/applications
 
 [ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
 	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
@@ -117,16 +144,7 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/audacious
 %attr(755,root,root) %{_bindir}/audtool
-%dir %{_libdir}/audacious
-%dir %{_libdir}/audacious/Container
-%dir %{_libdir}/audacious/Effect
-%dir %{_libdir}/audacious/General
-%dir %{_libdir}/audacious/Input
-%dir %{_libdir}/audacious/Output
-%dir %{_libdir}/audacious/Visualization
-
 %{_mandir}/man*/*
-
 %dir %{_datadir}/audacious
 %{_datadir}/audacious/glade
 %dir %{_datadir}/audacious/images
@@ -138,13 +156,23 @@ EOF
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudacious.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudacious.so.?
-%dir %{_libdir}/audacious
-%attr(755,root,root) %{_libdir}/audacious/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Container
+%dir %{_libdir}/%{name}/Effect
+%dir %{_libdir}/%{name}/General
+%dir %{_libdir}/%{name}/Input
+%dir %{_libdir}/%{name}/Output
+%dir %{_libdir}/%{name}/Transport
+%dir %{_libdir}/%{name}/Visualization
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.*.*.*
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.?
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudacious.so
+%attr(755,root,root) %{_libdir}/libaudclient.so
+%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so
 %{_includedir}/audacious
 %{_pkgconfigdir}/audacious.pc
+%{_pkgconfigdir}/audclient.pc
