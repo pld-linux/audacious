@@ -71,6 +71,8 @@ rozwój pierwowzoru został zakończony.
 Summary:	Audacious media player library
 Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
+Requires:	gtk+2 >= 2:2.6.0
+Requires:	libmowgli >= 0.4.0
 
 %description libs
 Audacious media player library.
@@ -85,6 +87,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.0
 Requires:	home-etc-devel
+Requires:	libmowgli-devel >= 0.4.0
 Requires:	mcs-devel
 
 %description devel
