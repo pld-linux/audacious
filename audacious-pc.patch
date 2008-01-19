@@ -1,0 +1,10 @@
+--- audacious-1.4.5/configure.ac	2007-12-29 01:13:39.000000000 +0000
++++ audacious-1.4.5/configure.ac	2008-01-19 15:16:28.000000000 +0000
+@@ -211,6 +211,7 @@
+ 	if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
+ 		enable_dbus="no"
+ 	else
++		ADD_PC_REQUIRES([dbus-glib-1 >= 0.60])
+ 		AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
+ 		AC_DEFINE(DBUS_SERVICES_DIR, "$datadir/dbus-1/services",
+ 			[Location of D-Bus services directory])
