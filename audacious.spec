@@ -10,7 +10,7 @@ Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
-# Source0-md5:	fcaa5ecc376d36fab7cec2a69ec03aac
+# Source0-md5:	888c082a7074f47e1c1bff19a48226b6
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
 Patch2:		%{name}-pc.patch
