@@ -5,15 +5,14 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	1.4.6
-Release:	1
+Version:	1.5.0
+Release:	0.1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
-# Source0-md5:	888c082a7074f47e1c1bff19a48226b6
+# Source0-md5:	0cc7eebb00fc53680363ff2077982731
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
-Patch2:		%{name}-pc.patch
 URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
@@ -102,7 +101,6 @@ multimedialnego Audacious.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__aclocal} -I m4
@@ -152,7 +150,7 @@ EOF
 %attr(755,root,root) %{_bindir}/audtool
 %{_mandir}/man*/*
 %dir %{_datadir}/audacious
-%{_datadir}/audacious/glade
+#%{_datadir}/audacious/glade
 %dir %{_datadir}/audacious/images
 %{_datadir}/audacious/images/*
 %{_datadir}/audacious/Skins
@@ -164,6 +162,8 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
 %ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
+%attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -172,13 +172,14 @@ EOF
 %dir %{_libdir}/%{name}/Output
 %dir %{_libdir}/%{name}/Transport
 %dir %{_libdir}/%{name}/Visualization
-%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.*.*.*
-%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so.?
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so
-%attr(755,root,root) %{_libdir}/%{name}/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/libaudid3tag.so
 %{_includedir}/audacious
+# Should this be here?
+%dir %{_includedir}/libSAD
+%{_includedir}/libSAD/*.h
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
