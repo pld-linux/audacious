@@ -13,6 +13,7 @@ Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
 # Source0-md5:	0cc7eebb00fc53680363ff2077982731
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
+Patch2:		%{name}-pc.patch
 URL:		http://audacious-media-player.org/
 %{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
@@ -101,6 +102,7 @@ multimedialnego Audacious.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal} -I m4
@@ -150,7 +152,6 @@ EOF
 %attr(755,root,root) %{_bindir}/audtool
 %{_mandir}/man*/*
 %dir %{_datadir}/audacious
-#%{_datadir}/audacious/glade
 %dir %{_datadir}/audacious/images
 %{_datadir}/audacious/images/*
 %{_datadir}/audacious/Skins
