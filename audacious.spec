@@ -89,6 +89,7 @@ Requires:	dbus-glib-devel
 Requires:	gtk+2-devel >= 2:2.6.0
 Requires:	home-etc-devel
 Requires:	libmowgli-devel >= 0.4.0
+Requires:	libsamplerate-devel
 Requires:	mcs-devel
 
 %description devel
