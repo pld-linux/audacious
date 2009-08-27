@@ -1,20 +1,15 @@
-#
-# Conditional build:
-%bcond_with	gconf		# build without gconf support
-#
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	1.5.1
-Release:	6
+Version:	2.1
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://distfiles.atheme.org/%{name}-%{version}.tbz2
-# Source0-md5:	ea7a8ee2e8f1a301b40ccf40788ab0eb
+Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
+# Source0-md5:	03ab6a062e5909214841f90f767f1147
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
-%{?with_gconf:BuildRequires:	GConf2-devel >= 2.6.0}
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	dbus-devel >= 0.60
@@ -30,9 +25,10 @@ BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
+Requires:	%{name}-general-skins = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
-Requires:	audacious-transport-stdio
+Requires:	audacious-transport-gio
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
@@ -53,6 +49,7 @@ Obsoletes:	audacious-output-disk
 Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
+Obsoletes:	audacious-transport-stdio
 Obsoletes:	audacious-visualization-iris
 Obsoletes:	audacious-visualization-rovascope
 # sr@Latn vs. sr@latin
@@ -109,9 +106,7 @@ multimedialnego Audacious.
 %{__autoconf}
 %{__autoheader}
 %configure \
-	--%{?with_gconf:en}%{!?with_gconf:dis}able-gconf \
-	--enable-samplerate \
-	--enable-shared
+	--enable-samplerate
 
 %{__make}
 
@@ -148,8 +143,8 @@ EOF
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/audacious
-%attr(755,root,root) %{_bindir}/audtool
+%attr(755,root,root) %{_bindir}/audacious2
+%attr(755,root,root) %{_bindir}/audtool2
 %{_mandir}/man*/*
 %dir %{_datadir}/audacious
 %dir %{_datadir}/audacious/images
@@ -162,9 +157,13 @@ EOF
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
+%attr(755,root,root) %{_libdir}/libaudcore.so.*
 %ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
+%attr(755,root,root) %{_libdir}/libaudtag.so.*
 %attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
 %ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
+%attr(755,root,root) %{_libdir}/libaudutil.so.*
+%attr(755,root,root) %{_libdir}/libSAD.so.*
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -177,8 +176,13 @@ EOF
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so
+%attr(755,root,root) %{_libdir}/libaudcore.so
+%attr(755,root,root) %{_libdir}/libaudtag.so
 %attr(755,root,root) %{_libdir}/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/libaudutil.so
+%attr(755,root,root) %{_libdir}/libSAD.so
 %{_includedir}/audacious
+%{_includedir}/libaudcore
 # Should this be here?
 %dir %{_includedir}/libSAD
 %{_includedir}/libSAD/*.h
