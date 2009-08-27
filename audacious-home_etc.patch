@@ -1,15 +1,6 @@
---- audacious-1.5.1/src/audacious/Makefile	2008-03-13 22:19:27.000000000 +0000
-+++ audacious-1.5.1/src/audacious/Makefile	2008-03-15 10:04:11.000000000 +0000
-@@ -188,6 +188,7 @@
- 		${DBUS_LIBS}					\
- 		${MOWGLI_LIBS}					\
- 		${LIBMCS_LIBS}					\
-+		-lhome_etc					\
- 		${REGEX_LIBS}
- 
- LDFLAGS += ${PROG_IMPLIB_LDFLAGS}
---- audacious-1.5.1/src/audacious/configdb.h	2008-05-23 22:00:34.000000000 +0000
-+++ audacious-1.5.1/src/audacious/configdb.h	2008-05-26 19:48:09.000000000 +0000
+diff -burNp audacious-2.1/src/audacious/configdb.h audacious-2.1-dud/src/audacious/configdb.h
+--- audacious-2.1/src/audacious/configdb.h	2009-07-07 00:39:12.000000000 +0200
++++ audacious-2.1-dud/src/audacious/configdb.h	2009-08-23 12:50:48.874454861 +0200
 @@ -3,6 +3,7 @@
  
  #include <glib.h>
@@ -18,36 +9,49 @@
  
  G_BEGIN_DECLS
  
---- audacious-1.3.0/src/audacious/main.c	2007-01-23 03:21:22.000000000 +0100
-+++ audacious-1.3.0/src/audacious/main.c	2007-01-26 19:08:25.000000000 +0100
-@@ -490,13 +490,13 @@
+diff -burNp audacious-2.1/src/audacious/main.c audacious-2.1-dud/src/audacious/main.c
+--- audacious-2.1/src/audacious/main.c	2009-07-07 00:39:12.000000000 +0200
++++ audacious-2.1-dud/src/audacious/main.c	2009-08-23 12:52:28.224445099 +0200
+@@ -137,13 +137,13 @@ aud_init_paths()
      char *xdg_cache_home;
  
      xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL
 -        ? g_build_filename(g_get_home_dir(), ".config", NULL)
-+        ? g_build_filename(_HEdir, ".config", NULL)
++	? g_build_filename(_HEdir, ".config", NULL)
          : g_strdup(getenv("XDG_CONFIG_HOME")));
      xdg_data_home = (getenv("XDG_DATA_HOME") == NULL
 -        ? g_build_filename(g_get_home_dir(), ".local", "share", NULL)
-+        ? g_build_filename(_HEdir, ".local", "share", NULL)
++	? g_build_filename(_HEdir, ".local", "share", NULL)
          : g_strdup(getenv("XDG_DATA_HOME")));
      xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL
 -        ? g_build_filename(g_get_home_dir(), ".cache", NULL)
-+        ? g_build_filename(_HEdir, ".cache", NULL)
++	? g_build_filename(_HEdir, ".cache", NULL)
          : g_strdup(getenv("XDG_CACHE_HOME")));
  
-     bmp_paths[BMP_PATH_USER_DIR] =
---- audacious-1.3.0/src/audacious/util.c	2007-01-27 14:01:55.000000000 +0100
-+++ audacious-1.3.0/src/audacious/util.c	2007-02-05 22:48:12.000000000 +0100
-@@ -29,6 +29,7 @@
+     aud_paths[BMP_PATH_USER_DIR] =
+diff -burNp audacious-2.1/src/audacious/Makefile audacious-2.1-dud/src/audacious/Makefile
+--- audacious-2.1/src/audacious/Makefile	2009-07-07 00:39:12.000000000 +0200
++++ audacious-2.1-dud/src/audacious/Makefile	2009-08-23 12:50:22.564458775 +0200
+@@ -168,6 +168,7 @@ LIBS += ${LDADD}						\
+ 		${DBUS_LIBS}					\
+ 		${MOWGLI_LIBS}					\
+ 		${LIBMCS_LIBS}					\
++		-lhome_etc					\
+ 		${REGEX_LIBS}
+ 
+ LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
+diff -burNp audacious-2.1/src/audacious/util.c audacious-2.1-dud/src/audacious/util.c
+--- audacious-2.1/src/audacious/util.c	2009-07-07 00:39:12.000000000 +0200
++++ audacious-2.1-dud/src/audacious/util.c	2009-08-23 12:53:44.297770774 +0200
+@@ -32,6 +32,7 @@
  #include "util.h"
  
  #include <glib.h>
 +#include <home_etc.h>
  #include <glib/gi18n.h>
- #include <glade/glade.h>
  #include <gtk/gtk.h>
-@@ -1011,7 +1012,7 @@
+ #include <stdlib.h>
+@@ -932,7 +933,7 @@ util_get_localdir(void)
    gchar *tmp;
  
    if ( (tmp = getenv("XDG_CONFIG_HOME")) == NULL )
@@ -55,19 +59,4 @@
 +    datadir = g_build_filename( _HEdir , ".config" , "audacious" ,  NULL );
    else
      datadir = g_build_filename( tmp , "audacious" , NULL );
- 
---- audacious-1.5.1/src/audacious/ui_skin.c	2008-05-23 22:00:34.000000000 +0000
-+++ audacious-1.5.1/src/audacious/ui_skin.c	2008-05-26 20:03:25.000000000 +0000
-@@ -1447,10 +1447,10 @@
- 
-     /* the way GTK does things can be very broken. --nenolod */
- 
--    gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", g_get_home_dir(),
-+    gchar *tmp = g_strdup_printf("%s/.themes/aud-%s", _HEdir,
-                                  basename(skin->path));
- 
--    gchar *troot = g_strdup_printf("%s/.themes", g_get_home_dir());
-+    gchar *troot = g_strdup_printf("%s/.themes", _HEdir);
-     g_mkdir_with_parents(troot, 0755);
-     g_free(troot);
  

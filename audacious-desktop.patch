@@ -1,8 +1,9 @@
---- audacious-1.5.1/audacious.desktop	2008-05-23 22:00:33.000000000 +0000
-+++ audacious-1.5.1/audacious.desktop	2008-05-26 19:39:44.000000000 +0000
-@@ -1,13 +1,15 @@
+diff -burNp audacious-2.1/audacious2.desktop audacious-2.1-dud/audacious2.desktop
+--- audacious-2.1/audacious2.desktop	2009-07-07 00:39:11.000000000 +0200
++++ audacious-2.1-dud/audacious2.desktop	2009-08-23 12:41:55.678366986 +0200
+@@ -1,13 +1,14 @@
  [Desktop Entry]
- Name=Audacious
+ Name=Audacious2
  GenericName=Audio Player
 +GenericName[pl]=Odtwarzacz muzyki
  Comment=Play music
@@ -10,12 +11,12 @@
  Comment[de]=Musik abspielen
 +Comment[hu]=Zene lejátszása
 +Comment[pl]=Odtwarzacz muzyki
- Exec=audacious %U
- Icon=audacious
+ Exec=audacious2 %U
+ Icon=audacious2
 -MimeType=application/x-ogg;audio/mp3;audio/mpeg;audio/mpegurl;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;application/ogg;audio/x-vorbis+ogg
 -Categories=Application;GTK;AudioVideo;Player;
 +MimeType=application/x-ogg;audio/mp3;audio/mpeg;audio/mpegurl;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;application/ogg;audio/x-vorbis+ogg;
-+Categories=GTK;Audio;Player;
++Categories=GTK;AudioVideo;Player;
  Terminal=false
  Type=Application
- Encoding=UTF-8
+-Encoding=UTF-8
