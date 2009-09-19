@@ -43,6 +43,7 @@ Obsoletes:	audacious-input-mpg123
 Obsoletes:	audacious-input-mplayer
 Obsoletes:	audacious-input-sap
 Obsoletes:	audacious-input-wav
+Obsoletes:	audacious-output-arts
 Obsoletes:	audacious-output-ALSA
 Obsoletes:	audacious-output-OSS
 Obsoletes:	audacious-output-disk
@@ -51,6 +52,7 @@ Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
 Obsoletes:	audacious-transport-stdio
 Obsoletes:	audacious-visualization-iris
+Obsoletes:	audacious-visualization-rootvis
 Obsoletes:	audacious-visualization-rovascope
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -156,14 +158,18 @@ EOF
 
 %files libs
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libSAD.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libSAD.so.?
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
-%attr(755,root,root) %{_libdir}/libaudcore.so.*
 %ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
-%attr(755,root,root) %{_libdir}/libaudtag.so.*
+%attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudcore.so.?
 %attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
 %ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
-%attr(755,root,root) %{_libdir}/libaudutil.so.*
-%attr(755,root,root) %{_libdir}/libSAD.so.*
+%attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudtag.so.?
+%attr(755,root,root) %{_libdir}/libaudutil.so.*.*.*
+%ghost %attr(755,root,root) %{_libdir}/libaudutil.so.?
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -175,16 +181,14 @@ EOF
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libSAD.so
 %attr(755,root,root) %{_libdir}/libaudclient.so
 %attr(755,root,root) %{_libdir}/libaudcore.so
-%attr(755,root,root) %{_libdir}/libaudtag.so
 %attr(755,root,root) %{_libdir}/libaudid3tag.so
+%attr(755,root,root) %{_libdir}/libaudtag.so
 %attr(755,root,root) %{_libdir}/libaudutil.so
-%attr(755,root,root) %{_libdir}/libSAD.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
-# Should this be here?
-%dir %{_includedir}/libSAD
-%{_includedir}/libSAD/*.h
+%{_includedir}/libSAD
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
