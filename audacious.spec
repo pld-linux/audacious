@@ -1,4 +1,5 @@
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
+Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	2.1
@@ -43,9 +44,9 @@ Obsoletes:	audacious-input-mpg123
 Obsoletes:	audacious-input-mplayer
 Obsoletes:	audacious-input-sap
 Obsoletes:	audacious-input-wav
-Obsoletes:	audacious-output-arts
 Obsoletes:	audacious-output-ALSA
 Obsoletes:	audacious-output-OSS
+Obsoletes:	audacious-output-arts
 Obsoletes:	audacious-output-disk
 Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
@@ -62,12 +63,17 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Audacious is a media player based on BMP. Since the development of the
 former project had been terminated, this fork was created.
 
+%description -l hu.UTF-8
+Audacious egy BMP-n alapuló médialejátszó. Amióta a kiinduló projekt
+fejlesztése abbamaradt, ez a leszármazott létrejött.
+
 %description -l pl.UTF-8
 Audacious to odtwarzacz mediów oparty na BMP. Powstał on ponieważ
 rozwój pierwowzoru został zakończony.
 
 %package libs
 Summary:	Audacious media player library
+Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 Requires:	gtk+2 >= 2:2.6.0
@@ -76,11 +82,15 @@ Requires:	libmowgli >= 0.4.0
 %description libs
 Audacious media player library.
 
+%description libs -l hu.UTF-8
+Audacious médialejátszó könyvtár.
+
 %description libs -l pl.UTF-8
 Biblioteka odtwarzacza multimedialnego Audacious.
 
 %package devel
 Summary:	Header files for Audacious media player
+Summary(hu.UTF-8):	Az audacious fejlécfájljai
 Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
@@ -93,6 +103,9 @@ Requires:	mcs-devel
 
 %description devel
 Header files required for compiling Audacious media player plugins.
+
+%description devel -l hu.UTF-8
+Az audacious fejlécfájljai.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe potrzebne do kompilowania wtyczek odtwarzacza
