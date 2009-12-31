@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó r
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	2.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
@@ -26,7 +26,10 @@ BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
+Requires:	%{name}-general-skins = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	audacious-output-plugin
+Requires:	audacious-transport-gio
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
@@ -48,7 +51,6 @@ Obsoletes:	audacious-output-disk
 Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
-Obsoletes:	audacious-transport-stdio
 Obsoletes:	audacious-visualization-iris
 Obsoletes:	audacious-visualization-rootvis
 Obsoletes:	audacious-visualization-rovascope
