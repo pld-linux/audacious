@@ -171,17 +171,17 @@ EOF
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libSAD.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libSAD.so.?
+%attr(755,root,root) %ghost %{_libdir}/libSAD.so.?
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudclient.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudclient.so.?
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudcore.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.?
 %attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudid3tag.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudid3tag.so.?
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudtag.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.?
 %attr(755,root,root) %{_libdir}/libaudutil.so.*.*.*
-%ghost %attr(755,root,root) %{_libdir}/libaudutil.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudutil.so.?
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
