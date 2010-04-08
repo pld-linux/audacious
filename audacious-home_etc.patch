@@ -12,23 +12,19 @@ diff -burNp audacious-2.1/src/audacious/configdb.h audacious-2.1-dud/src/audacio
 diff -burNp audacious-2.1/src/audacious/main.c audacious-2.1-dud/src/audacious/main.c
 --- audacious-2.1/src/audacious/main.c	2009-07-07 00:39:12.000000000 +0200
 +++ audacious-2.1-dud/src/audacious/main.c	2009-08-23 12:52:28.224445099 +0200
-@@ -137,13 +137,13 @@ aud_init_paths()
-     char *xdg_cache_home;
- 
-     xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL
--        ? g_build_filename(g_get_home_dir(), ".config", NULL)
-+	? g_build_filename(_HEdir, ".config", NULL)
-         : g_strdup(getenv("XDG_CONFIG_HOME")));
-     xdg_data_home = (getenv("XDG_DATA_HOME") == NULL
--        ? g_build_filename(g_get_home_dir(), ".local", "share", NULL)
-+	? g_build_filename(_HEdir, ".local", "share", NULL)
-         : g_strdup(getenv("XDG_DATA_HOME")));
-     xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL
--        ? g_build_filename(g_get_home_dir(), ".cache", NULL)
-+	? g_build_filename(_HEdir, ".cache", NULL)
-         : g_strdup(getenv("XDG_CACHE_HOME")));
- 
-     aud_paths[BMP_PATH_USER_DIR] =
+@@ -127,9 +127,9 @@
+     gchar *xdg_data_home;
+     gchar *xdg_cache_home;
+
+-    xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".config", NULL) : g_strdup(getenv("XDG_CONFIG_HOME")));
+-    xdg_data_home = (getenv("XDG_DATA_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".local", "share", NULL) : g_strdup(getenv("XDG_DATA_HOME")));
+-    xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL ? g_build_filename(g_get_home_dir(), ".cache", NULL) : g_strdup(getenv("XDG_CACHE_HOME")));
++    xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL ? g_build_filename(_HEdir, ".config", NULL) : g_strdup(getenv("XDG_CONFIG_HOME")));
++    xdg_data_home = (getenv("XDG_DATA_HOME") == NULL ? g_build_filename(_HEdir,  ".local", "share", NULL) : g_strdup(getenv("XDG_DATA_HOME")));
++    xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL ? g_build_filename(_HEdir,  ".cache", NULL) : g_strdup(getenv("XDG_CACHE_HOME")));
+
+     aud_paths[BMP_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
+     aud_paths[BMP_PATH_USER_SKIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
 diff -burNp audacious-2.1/src/audacious/Makefile audacious-2.1-dud/src/audacious/Makefile
 --- audacious-2.1/src/audacious/Makefile	2009-07-07 00:39:12.000000000 +0200
 +++ audacious-2.1-dud/src/audacious/Makefile	2009-08-23 12:50:22.564458775 +0200

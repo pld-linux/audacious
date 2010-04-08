@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	2.1
-Release:	5
+Version:	2.3
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
-# Source0-md5:	03ab6a062e5909214841f90f767f1147
+# Source0-md5:	b65753880c6762cdad6423df48590304
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
@@ -18,9 +18,7 @@ BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
-BuildRequires:	libglade2-devel >= 2.3.1
 BuildRequires:	libmowgli-devel >= 0.4.0
-BuildRequires:	libsamplerate-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
@@ -29,7 +27,7 @@ Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-general-skins
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
-Requires:	audacious-transport-gio
+Requires:	audacious-transport-unix_io
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
@@ -97,7 +95,6 @@ Requires:	dbus-glib-devel
 Requires:	gtk+2-devel >= 2:2.6.0
 Requires:	home-etc-devel
 Requires:	libmowgli-devel >= 0.4.0
-Requires:	libsamplerate-devel
 Requires:	mcs-devel
 
 %description devel
@@ -119,8 +116,7 @@ multimedialnego Audacious.
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
-%configure \
-	--enable-samplerate
+%configure
 
 %{__make}
 
@@ -163,25 +159,22 @@ EOF
 %dir %{_datadir}/audacious
 %dir %{_datadir}/audacious/images
 %{_datadir}/audacious/images/*
-%{_datadir}/audacious/Skins
 %{_datadir}/audacious/ui
 %{_desktopdir}/*.desktop
 %{_pixmapsdir}/*.png
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libSAD.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libSAD.so.?
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudclient.so.?
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudcore.so.?
+%attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.?
 %attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudid3tag.so.?
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.?
-%attr(755,root,root) %{_libdir}/libaudutil.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudutil.so.?
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -193,14 +186,14 @@ EOF
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libSAD.so
 %attr(755,root,root) %{_libdir}/libaudclient.so
 %attr(755,root,root) %{_libdir}/libaudcore.so
+%attr(755,root,root) %{_libdir}/libaudgui.so
 %attr(755,root,root) %{_libdir}/libaudid3tag.so
 %attr(755,root,root) %{_libdir}/libaudtag.so
-%attr(755,root,root) %{_libdir}/libaudutil.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
-%{_includedir}/libSAD
+%{_includedir}/libaudgui
+%{_includedir}/libaudtag
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
