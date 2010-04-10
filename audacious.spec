@@ -132,6 +132,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/audacious/applications
 
 [ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
 	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
+mv $RPM_BUILD_ROOT%{_datadir}/locale/pt{_PT,}
 %find_lang %{name}
 
 %clean
