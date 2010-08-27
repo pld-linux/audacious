@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	2.3
-Release:	4
+Version:	2.4.0
+Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
-# Source0-md5:	b65753880c6762cdad6423df48590304
+# Source0-md5:	113d99a09d4faead7adc07a86eab5c80
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
 URL:		http://audacious-media-player.org/
@@ -33,6 +33,7 @@ Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
 Obsoletes:	audacious-general-curl
 Obsoletes:	audacious-general-notify
+Obsoletes:	audacious-general-vfstrace
 Obsoletes:	audacious-input-alac
 Obsoletes:	audacious-input-cdaudio
 Obsoletes:	audacious-input-cube
@@ -52,6 +53,7 @@ Obsoletes:	audacious-output-ALSA
 Obsoletes:	audacious-output-OSS
 Obsoletes:	audacious-output-arts
 Obsoletes:	audacious-output-disk
+Obsoletes:	audacious-output-icecast
 Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
@@ -166,9 +168,10 @@ EOF
 %dir %{_datadir}/audacious
 %dir %{_datadir}/audacious/images
 %{_datadir}/audacious/images/*
-%{_datadir}/audacious/ui
 %{_desktopdir}/*.desktop
+%{_iconsdir}/hicolor/*/apps/audacious.*
 %{_pixmapsdir}/*.png
+%{_pixmapsdir}/*.svg
 
 %files libs
 %defattr(644,root,root,755)
@@ -178,8 +181,6 @@ EOF
 %attr(755,root,root) %ghost %{_libdir}/libaudcore.so.?
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudgui.so.?
-%attr(755,root,root) %{_libdir}/libaudid3tag.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudid3tag.so.?
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.?
 %dir %{_libdir}/%{name}
@@ -196,11 +197,9 @@ EOF
 %attr(755,root,root) %{_libdir}/libaudclient.so
 %attr(755,root,root) %{_libdir}/libaudcore.so
 %attr(755,root,root) %{_libdir}/libaudgui.so
-%attr(755,root,root) %{_libdir}/libaudid3tag.so
 %attr(755,root,root) %{_libdir}/libaudtag.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
 %{_includedir}/libaudgui
-%{_includedir}/libaudtag
 %{_pkgconfigdir}/audacious.pc
 %{_pkgconfigdir}/audclient.pc
