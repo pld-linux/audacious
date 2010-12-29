@@ -1,0 +1,1032 @@
+changeset:   6382:af52da71e22f
+user:        John Lindgren <john.lindgren@tds.net>
+date:        Thu Dec 23 15:23:54 2010 -0500
+files:       src/audacious/main.c src/libaudtag/aac/aac.c src/libaudtag/ape/ape.c src/libaudtag/audtag.c src/libaudtag/audtag.h src/libaudtag/id3/id3-common.c src/libaudtag/id3/id3v22.c src/libaudtag/id3/id3v24.c src/libaudtag/tag_module.c src/libaudtag/util.c src/libaudtag/util.h src/libaudtag/wma/guid.c src/libaudtag/wma/wma.c
+description:
+Implement debugging output in audtag without linking to core's cfg variable.
+
+
+diff -r febc349a5705 -r af52da71e22f src/audacious/main.c
+--- a/src/audacious/main.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/audacious/main.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -385,6 +385,7 @@
+     gtk_rc_add_default_file(aud_paths[BMP_PATH_GTKRC_FILE]);
+ 
+     parse_cmd_line_options(&argc, &argv);
++    tag_set_verbose (cfg.verbose);
+ 
+     if (!gtk_init_check(&argc, &argv))
+     {                           /* XXX */
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/aac/aac.c
+--- a/src/libaudtag/aac/aac.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/aac/aac.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -79,8 +79,8 @@
+ 
+ void printAtom(Atom * atom)
+ {
+-    AUDDBG("size = %x\n", atom->size);
+-    AUDDBG("name = %s\n", atom->name);
++    TAGDBG("size = %x\n", atom->size);
++    TAGDBG("name = %s\n", atom->name);
+ }
+ 
+ StrDataAtom *readStrDataAtom(VFSFile * fd)
+@@ -119,7 +119,7 @@
+     if (vfs_feof(fd))
+     {
+         g_free(atom);
+-        AUDDBG("The atom %s could not be found\n", name);
++        TAGDBG("The atom %s could not be found\n", name);
+         return NULL;
+     }
+     return atom;
+@@ -140,7 +140,7 @@
+     vfs_fseek(fd, -(meta->size - 11), SEEK_CUR);
+     Atom *ilst = findAtom(fd, ILST);
+ 
+-    AUDDBG("zzz = %d\n", vfs_ftell(fd));
++    TAGDBG("zzz = %d\n", vfs_ftell(fd));
+     ilstFileOffset = vfs_ftell(fd) - ilst->size;
+     vfs_fseek(fd, -(ilst->size - 7), SEEK_CUR);
+ 
+@@ -191,7 +191,7 @@
+     g_free(atom);
+     if (vfs_feof(from))
+     {
+-        AUDDBG("No free atoms\n");
++        TAGDBG("No free atoms\n");
+         g_free(atom);
+         atom = NULL;
+     }
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/ape/ape.c
+--- a/src/libaudtag/ape/ape.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/ape/ape.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -84,7 +84,7 @@
+ 
+     if (ape_read_header (handle, header))
+     {
+-        AUDDBG ("Found header at 0, length = %d, version = %d.\n", (gint)
++        TAGDBG ("Found header at 0, length = %d, version = %d.\n", (gint)
+          header->length, (gint) header->version);
+         * start = 0;
+         * length = header->length;
+@@ -94,7 +94,7 @@
+         if (! (header->flags & APE_FLAG_HAS_HEADER) || ! (header->flags &
+          APE_FLAG_IS_HEADER))
+         {
+-            AUDDBG ("Invalid header flags (%u).\n", (guint) header->flags);
++            TAGDBG ("Invalid header flags (%u).\n", (guint) header->flags);
+             return FALSE;
+         }
+ 
+@@ -105,7 +105,7 @@
+ 
+             if (! ape_read_header (handle, & secondary))
+             {
+-                AUDDBG ("Expected footer, but found none.\n");
++                TAGDBG ("Expected footer, but found none.\n");
+                 return FALSE;
+             }
+ 
+@@ -120,7 +120,7 @@
+ 
+     if (ape_read_header (handle, header))
+     {
+-        AUDDBG ("Found footer at %d, length = %d, version = %d.\n", (gint)
++        TAGDBG ("Found footer at %d, length = %d, version = %d.\n", (gint)
+          vfs_ftell (handle) - (gint) sizeof (APEHeader), (gint) header->length,
+          (gint) header->version);
+         * start = vfs_ftell (handle) - header->length;
+@@ -131,7 +131,7 @@
+         if ((header->flags & APE_FLAG_HAS_NO_FOOTER) || (header->flags &
+          APE_FLAG_IS_HEADER))
+         {
+-            AUDDBG ("Invalid footer flags (%u).\n", (guint) header->flags);
++            TAGDBG ("Invalid footer flags (%u).\n", (guint) header->flags);
+             return FALSE;
+         }
+ 
+@@ -143,7 +143,7 @@
+ 
+             if (! ape_read_header (handle, & secondary))
+             {
+-                AUDDBG ("Expected header, but found none.\n");
++                TAGDBG ("Expected header, but found none.\n");
+                 return FALSE;
+             }
+ 
+@@ -154,7 +154,7 @@
+         return TRUE;
+     }
+ 
+-    AUDDBG ("No header found.\n");
++    TAGDBG ("No header found.\n");
+     return FALSE;
+ }
+ 
+@@ -175,7 +175,7 @@
+ 
+     if (length < 8)
+     {
+-        AUDDBG ("Expected item, but only %d bytes remain in tag.\n", length);
++        TAGDBG ("Expected item, but only %d bytes remain in tag.\n", length);
+         return NULL;
+     }
+ 
+@@ -183,7 +183,7 @@
+ 
+     if (value == NULL)
+     {
+-        AUDDBG ("Unterminated item key (max length = %d).\n", length - 8);
++        TAGDBG ("Unterminated item key (max length = %d).\n", length - 8);
+         return NULL;
+     }
+ 
+@@ -191,7 +191,7 @@
+ 
+     if (header[0] > (gchar *) (* data) + length - value)
+     {
+-        AUDDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
++        TAGDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
+          (gint) header[0], (gint) ((gchar *) (* data) + length - value));
+         return NULL;
+     }
+@@ -227,7 +227,7 @@
+         return NULL;
+     }
+ 
+-    AUDDBG ("Reading %d items:\n", header.items);
++    TAGDBG ("Reading %d items:\n", header.items);
+     item = data;
+ 
+     while (header.items --)
+@@ -238,7 +238,7 @@
+         if (pair == NULL)
+             break;
+ 
+-        AUDDBG ("Read: %s = %s.\n", pair->key, pair->value);
++        TAGDBG ("Read: %s = %s.\n", pair->key, pair->value);
+         list = g_list_prepend (list, pair);
+     }
+ 
+@@ -354,7 +354,7 @@
+     gint value_len = strlen (value);
+     guint32 header[2];
+ 
+-    AUDDBG ("Write: %s = %s.\n", key, value);
++    TAGDBG ("Write: %s = %s.\n", key, value);
+ 
+     header[0] = GUINT32_TO_LE (value_len);
+     header[1] = 0;
+@@ -433,7 +433,7 @@
+     {
+         if (start + length != vfs_fsize (handle))
+         {
+-            AUDDBG ("Writing tags is only supported at end of file.\n");
++            TAGDBG ("Writing tags is only supported at end of file.\n");
+             goto ERROR;
+         }
+ 
+@@ -481,7 +481,7 @@
+         items ++;
+     }
+ 
+-    AUDDBG ("Wrote %d items, %d bytes.\n", items, length);
++    TAGDBG ("Wrote %d items, %d bytes.\n", items, length);
+ 
+     if (! write_header (length, items, FALSE, handle) || vfs_fseek (handle,
+      start, SEEK_SET) || ! write_header (length, items, TRUE, handle))
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/audtag.c
+--- a/src/libaudtag/audtag.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/audtag.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -23,11 +23,18 @@
+ #include "tag_module.h"
+ #include "util.h"
+ 
++gboolean tag_verbose = FALSE;
++
+ void tag_init(void)
+ {
+     init_tag_modules();
+ }
+ 
++void tag_set_verbose (gboolean verbose)
++{
++    tag_verbose = verbose;
++}
++
+ /* The tuple's file-related attributes are already set */
+ 
+ gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/audtag.h
+--- a/src/libaudtag/audtag.h	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/audtag.h	Thu Dec 23 15:23:54 2010 -0500
+@@ -37,8 +37,8 @@
+     TAG_TYPE_APE,
+ };
+ 
+-void tag_init(void);
+-void tag_terminate(void);
++void tag_init (void);
++void tag_set_verbose (gboolean verbose);
+ 
+ gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
+ gboolean tag_image_read (VFSFile * handle, void * * data, gint * size);
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/id3/id3-common.c
+--- a/src/libaudtag/id3/id3-common.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/id3/id3-common.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -34,7 +34,7 @@
+     gchar * buffer = NULL;
+     gsize converted = 0;
+ 
+-    AUDDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
++    TAGDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
+      nulled);
+ 
+     if (nulled)
+@@ -50,7 +50,7 @@
+                 return NULL;
+ 
+             length = null - text;
+-            AUDDBG ("length before null = %d\n", length);
++            TAGDBG ("length before null = %d\n", length);
+ 
+             if (after != NULL)
+                 * after = null + 1;
+@@ -62,7 +62,7 @@
+                 return NULL;
+ 
+             length = null - text;
+-            AUDDBG ("length before null = %d\n", length);
++            TAGDBG ("length before null = %d\n", length);
+ 
+             if (after != NULL)
+                 * after = null + 2;
+@@ -92,8 +92,8 @@
+         break;
+     }
+ 
+-    AUDDBG ("length converted: %d\n", (gint) converted);
+-    AUDDBG ("string: %s\n", buffer);
++    TAGDBG ("length converted: %d\n", (gint) converted);
++    TAGDBG ("string: %s\n", buffer);
+ 
+     if (_converted != NULL)
+         * _converted = converted;
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/id3/id3v22.c
+--- a/src/libaudtag/id3/id3v22.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/id3/id3v22.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -97,12 +97,12 @@
+ 
+     header->size = unsyncsafe32(GUINT32_FROM_BE(header->size));
+ 
+-    AUDDBG ("Found ID3v2 header:\n");
+-    AUDDBG (" magic = %.3s\n", header->magic);
+-    AUDDBG (" version = %d\n", (gint) header->version);
+-    AUDDBG (" revision = %d\n", (gint) header->revision);
+-    AUDDBG (" flags = %x\n", (gint) header->flags);
+-    AUDDBG (" size = %d\n", (gint) header->size);
++    TAGDBG ("Found ID3v2 header:\n");
++    TAGDBG (" magic = %.3s\n", header->magic);
++    TAGDBG (" version = %d\n", (gint) header->version);
++    TAGDBG (" revision = %d\n", (gint) header->revision);
++    TAGDBG (" flags = %x\n", (gint) header->flags);
++    TAGDBG (" size = %d\n", (gint) header->size);
+     return TRUE;
+ }
+ 
+@@ -128,7 +128,7 @@
+ 
+     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
+ 
+-    AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
++    TAGDBG ("Offset = %d, header size = %d, data size = %d\n",
+      (gint) * offset, * header_size, * data_size);
+ 
+     return TRUE;
+@@ -154,16 +154,16 @@
+     for (i = 0; i < 3; i++)
+     {
+         hdrsz |= (guint32) header.size[i] << ((2 - i) * 8);
+-        AUDDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
++        TAGDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
+     }
+ 
+ //    hdrsz = GUINT32_TO_BE(hdrsz);
+     if (hdrsz > max_size || hdrsz == 0)
+         return FALSE;
+ 
+-    AUDDBG ("Found frame:\n");
+-    AUDDBG (" key = %.3s\n", header.key);
+-    AUDDBG (" size = %d\n", (gint) hdrsz);
++    TAGDBG ("Found frame:\n");
++    TAGDBG (" key = %.3s\n", header.key);
++    TAGDBG (" size = %d\n", (gint) hdrsz);
+ 
+     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
+     sprintf (key, "%.3s", header.key);
+@@ -174,7 +174,7 @@
+     if (vfs_fread (* data, 1, * size, handle) != * size)
+         return FALSE;
+ 
+-    AUDDBG ("Data size = %d.\n", * size);
++    TAGDBG ("Data size = %d.\n", * size);
+     return TRUE;
+ }
+ 
+@@ -226,9 +226,9 @@
+         return;
+ 
+     if (customfield != NULL)
+-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
++        TAGDBG ("Custom field %s = %s.\n", customfield, text);
+     else
+-        AUDDBG ("Field %i = %s.\n", field, text);
++        TAGDBG ("Field %i = %s.\n", field, text);
+ 
+     tuple_associate_string (tuple, field, customfield, text);
+     g_free (text);
+@@ -243,9 +243,9 @@
+         return;
+ 
+     if (customfield != NULL)
+-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
++        TAGDBG ("Custom field %s = %s.\n", customfield, text);
+     else
+-        AUDDBG ("Field %i = %s.\n", field, text);
++        TAGDBG ("Field %i = %s.\n", field, text);
+ 
+     tuple_associate_int (tuple, field, customfield, atoi (text));
+     g_free (text);
+@@ -258,7 +258,7 @@
+     if (! decode_comment_frame (data, size, & lang, & type, & value))
+         return;
+ 
+-    AUDDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
++    TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
+ 
+     if (! type[0]) /* blank type == actual comment */
+         tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+@@ -281,7 +281,7 @@
+         return;
+ 
+     gchar * value = separator + 1;
+-    AUDDBG ("TXX: %s = %s.\n", text, value);
++    TAGDBG ("TXX: %s = %s.\n", text, value);
+     tuple_associate_string (tuple, -1, text, value);
+ 
+     g_free (text);
+@@ -307,7 +307,7 @@
+     data += 4;
+     size -= 4;
+ 
+-    AUDDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
++    TAGDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+      * channel, * adjustment, * adjustment_unit, peak_bits);
+ 
+     if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
+@@ -327,7 +327,7 @@
+         data += bytes;
+         size -= count;
+ 
+-        AUDDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
++        TAGDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
+     }
+     else
+     {
+@@ -350,7 +350,7 @@
+ 
+     domain = (const gchar *) data;
+ 
+-    AUDDBG ("RVA domain: %s\n", domain);
++    TAGDBG ("RVA domain: %s\n", domain);
+ 
+     size -= strlen (domain) + 1;
+     data += strlen (domain) + 1;
+@@ -444,7 +444,7 @@
+      & data_size))
+         return FALSE;
+ 
+-    AUDDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
++    TAGDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
+ 
+     for (pos = 0; pos < data_size; )
+     {
+@@ -455,7 +455,7 @@
+         if (! read_frame (handle, data_size - pos, version, syncsafe,
+          & frame_size, key, & data, & size))
+ 	{
+-	    AUDDBG("read_frame failed at pos %i\n", pos);
++	    TAGDBG("read_frame failed at pos %i\n", pos);
+             break;
+ 	}
+ 
+@@ -507,7 +507,7 @@
+             decode_rva (tuple, data, size);
+             break;
+           default:
+-            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
++            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+             break;
+         }
+ 
+@@ -533,7 +533,7 @@
+     * image_data = g_memdup (after, data + size - after);
+     * image_size = data + size - after;
+ 
+-    AUDDBG ("PIC: mime = %s, type = %d, size = %d.\n", * mime,
++    TAGDBG ("PIC: mime = %s, type = %d, size = %d.\n", * mime,
+      * type, * image_size);
+     return TRUE;
+ }
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/id3/id3v24.c
+--- a/src/libaudtag/id3/id3v24.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/id3/id3v24.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -118,7 +118,7 @@
+ 
+     size = GUINT32_FROM_BE (size);
+ 
+-    AUDDBG ("Found v2.3 extended header, size = %d.\n", (gint) size);
++    TAGDBG ("Found v2.3 extended header, size = %d.\n", (gint) size);
+ 
+     if (vfs_fseek (handle, size, SEEK_CUR))
+         return FALSE;
+@@ -136,7 +136,7 @@
+ 
+     size = unsyncsafe32 (GUINT32_FROM_BE (size));
+ 
+-    AUDDBG ("Found v2.4 extended header, size = %d.\n", (gint) size);
++    TAGDBG ("Found v2.4 extended header, size = %d.\n", (gint) size);
+ 
+     if (vfs_fseek (handle, size - 4, SEEK_CUR))
+         return FALSE;
+@@ -155,12 +155,12 @@
+ 
+     header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
+ 
+-    AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
+-    AUDDBG (" magic = %.3s\n", header->magic);
+-    AUDDBG (" version = %d\n", (gint) header->version);
+-    AUDDBG (" revision = %d\n", (gint) header->revision);
+-    AUDDBG (" flags = %x\n", (gint) header->flags);
+-    AUDDBG (" size = %d\n", (gint) header->size);
++    TAGDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
++    TAGDBG (" magic = %.3s\n", header->magic);
++    TAGDBG (" version = %d\n", (gint) header->version);
++    TAGDBG (" revision = %d\n", (gint) header->revision);
++    TAGDBG (" flags = %x\n", (gint) header->flags);
++    TAGDBG (" size = %d\n", (gint) header->size);
+     return TRUE;
+ }
+ 
+@@ -256,7 +256,7 @@
+         * data_size -= extended_size;
+     }
+ 
+-    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
++    TAGDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
+      "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
+ 
+     return TRUE;
+@@ -303,17 +303,17 @@
+     if (header.size > max_size || header.size == 0)
+         return FALSE;
+ 
+-    AUDDBG ("Found frame:\n");
+-    AUDDBG (" key = %.4s\n", header.key);
+-    AUDDBG (" size = %d\n", (gint) header.size);
+-    AUDDBG (" flags = %x\n", (gint) header.flags);
++    TAGDBG ("Found frame:\n");
++    TAGDBG (" key = %.4s\n", header.key);
++    TAGDBG (" size = %d\n", (gint) header.size);
++    TAGDBG (" flags = %x\n", (gint) header.flags);
+ 
+     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
+     sprintf (key, "%.4s", header.key);
+ 
+     if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
+     {
+-        AUDDBG ("Hit compressed/encrypted frame %s.\n", key);
++        TAGDBG ("Hit compressed/encrypted frame %s.\n", key);
+         return FALSE;
+     }
+ 
+@@ -334,7 +334,7 @@
+     if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
+         * size = unsyncsafe (* data, * size);
+ 
+-    AUDDBG ("Data size = %d.\n", * size);
++    TAGDBG ("Data size = %d.\n", * size);
+     return TRUE;
+ }
+ 
+@@ -390,7 +390,7 @@
+ 
+         if (mowgli_dictionary_retrieve (dict, key) != NULL)
+         {
+-            AUDDBG ("Discarding duplicate frame %s.\n", key);
++            TAGDBG ("Discarding duplicate frame %s.\n", key);
+             g_free (data);
+             continue;
+         }
+@@ -407,7 +407,7 @@
+ static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
+  frame_size)
+ {
+-    AUDDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
++    TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
+ 
+     ID3v2FrameHeader header;
+ 
+@@ -447,7 +447,7 @@
+     WriteState state = {fd, 0};
+     mowgli_dictionary_foreach (dict, write_frame_cb, & state);
+ 
+-    AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
++    TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
+     return state.written_size;
+ }
+ 
+@@ -488,9 +488,9 @@
+         return;
+ 
+     if (customfield != NULL)
+-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
++        TAGDBG ("Custom field %s = %s.\n", customfield, text);
+     else
+-        AUDDBG ("Field %i = %s.\n", field, text);
++        TAGDBG ("Field %i = %s.\n", field, text);
+ 
+     tuple_associate_string (tuple, field, customfield, text);
+     g_free (text);
+@@ -505,9 +505,9 @@
+         return;
+ 
+     if (customfield != NULL)
+-        AUDDBG ("Custom field %s = %s.\n", customfield, text);
++        TAGDBG ("Custom field %s = %s.\n", customfield, text);
+     else
+-        AUDDBG ("Field %i = %s.\n", field, text);
++        TAGDBG ("Field %i = %s.\n", field, text);
+ 
+     tuple_associate_int (tuple, field, customfield, atoi (text));
+     g_free (text);
+@@ -545,10 +545,10 @@
+             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
+                 tuple_associate_string (tuple, -1, "media-class", "Game Soundtrack");
+         } else {
+-            AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
++            TAGDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
+         }
+     } else {
+-        AUDDBG("Unable to decode private data, skipping: %s\n", text);
++        TAGDBG("Unable to decode private data, skipping: %s\n", text);
+     }
+ 
+ DONE:
+@@ -562,7 +562,7 @@
+     if (! decode_comment_frame (data, size, & lang, & type, & value))
+         return;
+ 
+-    AUDDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
++    TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
+ 
+     if (! type[0]) /* blank type == actual comment */
+         tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+@@ -585,7 +585,7 @@
+         return;
+ 
+     gchar * value = separator + 1;
+-    AUDDBG ("TXXX: %s = %s.\n", text, value);
++    TAGDBG ("TXXX: %s = %s.\n", text, value);
+     tuple_associate_string (tuple, -1, text, value);
+ 
+     g_free (text);
+@@ -611,7 +611,7 @@
+     data += 4;
+     size -= 4;
+ 
+-    AUDDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
++    TAGDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+      * channel, * adjustment, * adjustment_unit, peak_bits);
+ 
+     if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
+@@ -631,7 +631,7 @@
+         data += bytes;
+         size -= count;
+ 
+-        AUDDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
++        TAGDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
+     }
+     else
+     {
+@@ -654,7 +654,7 @@
+ 
+     domain = (const gchar *) data;
+ 
+-    AUDDBG ("RVA2 domain: %s\n", domain);
++    TAGDBG ("RVA2 domain: %s\n", domain);
+ 
+     size -= strlen (domain) + 1;
+     data += strlen (domain) + 1;
+@@ -752,7 +752,7 @@
+     if (frame == NULL)
+         return;
+ 
+-    AUDDBG ("Deleting frame %s.\n", id3_frames[id]);
++    TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
+     mowgli_dictionary_delete (dict, id3_frames[id]);
+     free_generic_frame (frame);
+ }
+@@ -766,7 +766,7 @@
+         return;
+     }
+ 
+-    AUDDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
++    TAGDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
+     gint length = strlen (text);
+ 
+     GenericFrame * frame = add_generic_frame (id, length + 1, dict);
+@@ -782,7 +782,7 @@
+         return;
+     }
+ 
+-    AUDDBG ("Adding comment frame = %s.\n", text);
++    TAGDBG ("Adding comment frame = %s.\n", text);
+     gint length = strlen (text);
+     GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5, dict);
+ 
+@@ -896,7 +896,7 @@
+             decode_rva2 (tuple, data, size);
+             break;
+           default:
+-            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
++            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+             break;
+         }
+ 
+@@ -925,7 +925,7 @@
+     * image_data = g_memdup (after, data + size - after);
+     * image_size = data + size - after;
+ 
+-    AUDDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
++    TAGDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
+      * type, * desc, * image_size);
+     return TRUE;
+ }
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/tag_module.c
+--- a/src/libaudtag/tag_module.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/tag_module.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -47,13 +47,13 @@
+     {
+         if (vfs_fseek(fd, 0, SEEK_SET))
+         {
+-            AUDDBG("not a seekable file\n");
++            TAGDBG("not a seekable file\n");
+             return NULL;
+         }
+ 
+         if (((tag_module_t *) mod->data)->can_handle_file (fd))
+         {
+-            AUDDBG ("Module %s accepted file.\n", ((tag_module_t *)
++            TAGDBG ("Module %s accepted file.\n", ((tag_module_t *)
+              mod->data)->name);
+             return mod->data;
+         }
+@@ -69,6 +69,6 @@
+         }
+     }
+ 
+-    AUDDBG("no module found\n");
++    TAGDBG("no module found\n");
+     return NULL;
+ }
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/util.c
+--- a/src/libaudtag/util.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/util.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -61,66 +61,66 @@
+     dir = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
+     file = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+     filepath = g_strdup_printf("%s/%s", dir, file);
+-    AUDDBG("file path = %s\n", filepath);
++    TAGDBG("file path = %s\n", filepath);
+     return filepath;
+ }
+ 
+ void print_tuple(Tuple * tuple)
+ {
+ #if WMA_DEBUG
+-    AUDDBG("--------------TUPLE PRINT --------------------\n");
++    TAGDBG("--------------TUPLE PRINT --------------------\n");
+     const gchar *title = tuple_get_string(tuple, FIELD_TITLE, NULL);
+-    AUDDBG("title = %s\n", title);
++    TAGDBG("title = %s\n", title);
+     /* artist */
+     const gchar *artist = tuple_get_string(tuple, FIELD_ARTIST, NULL);
+-    AUDDBG("artist = %s\n", artist);
++    TAGDBG("artist = %s\n", artist);
+ 
+     /* copyright */
+     const gchar *copyright = tuple_get_string(tuple, FIELD_COPYRIGHT, NULL);
+-    AUDDBG("copyright = %s\n", copyright);
++    TAGDBG("copyright = %s\n", copyright);
+ 
+     /* comment / description */
+ 
+     const gchar *comment = tuple_get_string(tuple, FIELD_COMMENT, NULL);
+-    AUDDBG("comment = %s\n", comment);
++    TAGDBG("comment = %s\n", comment);
+ 
+     /* codec name */
+     const gchar *codec_name = tuple_get_string(tuple, FIELD_CODEC, NULL);
+-    AUDDBG("codec = %s\n", codec_name);
++    TAGDBG("codec = %s\n", codec_name);
+ 
+     /* album */
+     const gchar *album = tuple_get_string(tuple, FIELD_ALBUM, NULL);
+-    AUDDBG("Album = %s\n", album);
++    TAGDBG("Album = %s\n", album);
+ 
+     /*track number */
+     gint track_nr = tuple_get_int(tuple, FIELD_TRACK_NUMBER, NULL);
+-    AUDDBG("Track nr = %d\n", track_nr);
++    TAGDBG("Track nr = %d\n", track_nr);
+ 
+     /* genre */
+     const gchar *genre = tuple_get_string(tuple, FIELD_GENRE, NULL);
+-    AUDDBG("Genre = %s \n", genre);
++    TAGDBG("Genre = %s \n", genre);
+ 
+     /* length */
+     gint length = tuple_get_int(tuple, FIELD_LENGTH, NULL);
+-    AUDDBG("Length = %d\n", length);
++    TAGDBG("Length = %d\n", length);
+ 
+     /* year */
+     gint year = tuple_get_int(tuple, FIELD_YEAR, NULL);
+-    AUDDBG("Year = %d\n", year);
++    TAGDBG("Year = %d\n", year);
+ 
+     /* quality */
+     const gchar *quality = tuple_get_string(tuple, FIELD_QUALITY, NULL);
+-    AUDDBG("quality = %s\n", quality);
++    TAGDBG("quality = %s\n", quality);
+ 
+     /* path */
+     const gchar *path = tuple_get_string(tuple, FIELD_FILE_PATH, NULL);
+-    AUDDBG("path = %s\n", path);
++    TAGDBG("path = %s\n", path);
+ 
+     /* filename */
+     const gchar *filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+-    AUDDBG("filename = %s\n", filename);
++    TAGDBG("filename = %s\n", filename);
+ 
+-    AUDDBG("-----------------END---------------------\n");
++    TAGDBG("-----------------END---------------------\n");
+ #endif
+ }
+ 
+@@ -151,7 +151,7 @@
+         p = NULL;
+     }
+     gchar *s = utf8(p);
+-    AUDDBG("Converted to UTF8: '%s'\n", s);
++    TAGDBG("Converted to UTF8: '%s'\n", s);
+     g_free(s);
+     return p;
+ }
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/util.h
+--- a/src/libaudtag/util.h	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/util.h	Thu Dec 23 15:23:54 2010 -0500
+@@ -23,7 +23,7 @@
+ #define TAGUTIL_H
+ 
+ #include <glib.h>
+-#include <audacious/debug.h>
++
+ #include "libaudcore/tuple.h"
+ #include "libaudcore/vfs.h"
+ 
+@@ -157,6 +157,10 @@
+     GENRE_EURO_HOUSE
+ };
+ 
++extern gboolean tag_verbose;
++
++#define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
++
+ time_t unix_time(guint64 win_time);
+ 
+ guint16 get_year(guint64 win_time);
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/wma/guid.c
+--- a/src/libaudtag/wma/guid.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/wma/guid.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -71,18 +71,18 @@
+ gboolean guid_equal(GUID_t * g1, GUID_t * g2)
+ {
+     /*
+-       AUDDBG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
+-       AUDDBG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
++       TAGDBG("GUID 1 = %8x-%hx-%hx-%"PRIx64"\n", g1->le32, g1->le16_1, g1->le16_2, g1->be64);
++       TAGDBG("GUID 2 = %8x-%hx-%hx-%"PRIx64"\n", g2->le32, g2->le16_1, g2->le16_2, g2->be64);
+      */
+ 
+     g_return_val_if_fail((g1 != NULL) && (g2 != NULL), FALSE);
+     if (!memcmp(g1, g2, 16))
+     {
+-        //        AUDDBG("equal\n");
++        //        TAGDBG("equal\n");
+ 
+         return TRUE;
+     }
+-    /* AUDDBG("not equal\n"); */
++    /* TAGDBG("not equal\n"); */
+     return FALSE;
+ }
+ 
+diff -r febc349a5705 -r af52da71e22f src/libaudtag/wma/wma.c
+--- a/src/libaudtag/wma/wma.c	Thu Dec 23 14:26:42 2010 -0500
++++ b/src/libaudtag/wma/wma.c	Thu Dec 23 15:23:54 2010 -0500
+@@ -31,7 +31,7 @@
+ /* static functions */
+ static GenericHeader *read_generic_header(VFSFile * f, gboolean read_data)
+ {
+-    AUDDBG("read top-level header object\n");
++    TAGDBG("read top-level header object\n");
+     g_return_val_if_fail((f != NULL), NULL);
+     GenericHeader *header = g_new0(GenericHeader, 1);
+     header->guid = guid_read_from_file(f);
+@@ -42,7 +42,7 @@
+         header->data = NULL;
+ 
+     gchar *s = guid_convert_to_string(header->guid);
+-    AUDDBG("read GUID: %s\n", s);
++    TAGDBG("read GUID: %s\n", s);
+     g_free(s);
+ 
+     return header;
+@@ -50,7 +50,7 @@
+ 
+ static HeaderObj *read_top_header_object(VFSFile * f)
+ {
+-    AUDDBG("read top-level header object\n");
++    TAGDBG("read top-level header object\n");
+     g_return_val_if_fail((f != NULL), NULL);
+     HeaderObj *header = g_new0(HeaderObj, 1);
+ 
+@@ -59,7 +59,7 @@
+ 
+     header->size = read_LEuint64(f);
+     header->objectsNr = read_LEuint32(f);
+-    AUDDBG("Number of child objects: %d\n", header->objectsNr);
++    TAGDBG("Number of child objects: %d\n", header->objectsNr);
+ 
+     header->res1 = read_uint8(f);
+     header->res2 = read_uint8(f);
+@@ -102,14 +102,14 @@
+ 
+ static guint find_descriptor_id(gchar * s)
+ {
+-    AUDDBG("finding descriptor id for '%s'\n", s);
++    TAGDBG("finding descriptor id for '%s'\n", s);
+     g_return_val_if_fail(s != NULL, -1);
+     gchar *l[DESC_LAST] = { DESC_ALBUM_STR, DESC_YEAR_STR, DESC_GENRE_STR, DESC_TRACK_STR };
+     guint i;
+     for (i = 0; i < DESC_LAST; i++)
+         if (!strcmp(l[i], s))
+         {
+-            AUDDBG("found descriptor %s\n", s);
++            TAGDBG("found descriptor %s\n", s);
+             return i;
+         }
+     return -1;
+@@ -121,20 +121,20 @@
+     gchar *val = NULL, *name = NULL;
+     guint32 intval = -1;
+     gint dtype;
+-    AUDDBG("reading name_len\n");
++    TAGDBG("reading name_len\n");
+     cd->name_len = read_LEuint16(f);
+-    AUDDBG("reading name\n");
++    TAGDBG("reading name\n");
+     cd->name = fread_utf16(f, cd->name_len);
+-    AUDDBG("reading val_type\n");
++    TAGDBG("reading val_type\n");
+     cd->val_type = read_LEuint16(f);
+-    AUDDBG("reading val_len\n");
++    TAGDBG("reading val_len\n");
+     cd->val_len = read_LEuint16(f);
+ 
+     name = utf8(cd->name);
+     dtype = find_descriptor_id(name);
+     g_free(name);
+ 
+-    AUDDBG("reading val\n");
++    TAGDBG("reading val\n");
+ 
+     if (populate_tuple)
+     {
+@@ -143,7 +143,7 @@
+         {                       /*UTF16 */
+             cd->val = read_char_data(f, cd->val_len);
+             val = utf8((gunichar2 *) cd->val);
+-            AUDDBG("val: '%s' dtype: %d\n", val, dtype);
++            TAGDBG("val: '%s' dtype: %d\n", val, dtype);
+             if (dtype == DESC_ALBUM)
+                 tuple_associate_string(t, FIELD_ALBUM, NULL, val);
+             if (dtype == DESC_GENRE)
+@@ -158,7 +158,7 @@
+             if (cd->val_type == 3)
+             {
+                 intval = read_LEuint32(f);
+-                AUDDBG("intval: %d, dtype: %d\n", intval, dtype);
++                TAGDBG("intval: %d, dtype: %d\n", intval, dtype);
+                 if (dtype == DESC_TRACK)
+                     tuple_associate_int(t, FIELD_TRACK_NUMBER, NULL, intval);
+             }
+@@ -168,8 +168,8 @@
+     }
+     else
+         cd->val = read_char_data(f, cd->val_len);
+-    AUDDBG("read str_val: '%s', intval: %d\n", val, intval);
+-    AUDDBG("exiting read_descriptor \n\n");
++    TAGDBG("read str_val: '%s', intval: %d\n", val, intval);
++    TAGDBG("exiting read_descriptor \n\n");
+     return cd;
+ }
+ 
+@@ -214,7 +214,7 @@
+ /* returns the offset of the object in the file */
+ static long ftell_object_by_guid(VFSFile * f, GUID_t * g)
+ {
+-    AUDDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
++    TAGDBG("seeking object %s, with ID %d \n", guid_convert_to_string(g), get_guid_type(g));
+     HeaderObj *h = read_top_header_object(f);
+     g_return_val_if_fail((f != NULL) && (g != NULL) && (h != NULL), -1);
+ 
+@@ -222,19 +222,19 @@
+     while (i < h->objectsNr)
+     {
+         GenericHeader *gen_hdr = read_generic_header(f, FALSE);
+-        AUDDBG("encountered GUID %s, with ID %d\n", guid_convert_to_string(gen_hdr->guid), get_guid_type(gen_hdr->guid));
++        TAGDBG("encountered GUID %s, with ID %d\n", guid_convert_to_string(gen_hdr->guid), get_guid_type(gen_hdr->guid));
+         if (guid_equal(gen_hdr->guid, g))
+         {
+             g_free(h);
+             g_free(gen_hdr);
+             guint64 ret = vfs_ftell(f) - 24;
+-            AUDDBG("at offset %" PRIx64 "\n", ret);
++            TAGDBG("at offset %" PRIx64 "\n", ret);
+             return ret;
+         }
+         vfs_fseek(f, gen_hdr->size - 24, SEEK_CUR);     //most headers have a size as their second field"
+         i++;
+     }
+-    AUDDBG("The object was not found\n");
++    TAGDBG("The object was not found\n");
+ 
+     return -1;
+ }
+@@ -298,7 +298,7 @@
+ 
+ static gboolean write_generic_header(VFSFile * f, GenericHeader * gh)
+ {
+-    AUDDBG("Writing generic header\n");
++    TAGDBG("Writing generic header\n");
+     guid_write_to_file(f, get_guid_type(gh->guid));
+     return write_char_data(f, gh->data, gh->size);
+ }
+@@ -312,7 +312,7 @@
+ 
+ static gboolean write_top_header_object(VFSFile * f, HeaderObj * header)
+ {
+-    AUDDBG("write header object\n");
++    TAGDBG("write header object\n");
+     vfs_fseek(f, 0, SEEK_SET);
+     return (guid_write_to_file(f, ASF_HEADER_OBJECT) && write_LEuint64(f, header->size) && write_LEuint32(f, header->objectsNr) && write_uint8(f, header->res1) &&      /* the reserved fields */
+             write_uint8(f, header->res2));
+@@ -368,7 +368,7 @@
+     GUID_t *g;
+     /*read all the headers and write them to the new file */
+     /*the headers that contain tuple data will be overwritten */
+-    AUDDBG("Header Object size: %" PRId64 "\n", top_ho->size);
++    TAGDBG("Header Object size: %" PRId64 "\n", top_ho->size);
+     //vfs_fseek(tmpfile, )
+     for (i = 0; i < top_ho->objectsNr; i++)
+     {
+@@ -413,11 +413,11 @@
+     /*
+        if (g_rename(f1, f2) == 0)
+        {
+-       AUDDBG("the tag was updated successfully\n");
++       TAGDBG("the tag was updated successfully\n");
+        }
+        else
+        {
+-       AUDDBG("an error has occured\n");
++       TAGDBG("an error has occured\n");
+        }
+      */
+     g_free(f1);
+
