@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	2.4.2
+Version:	2.4.3
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
-# Source0-md5:	bffdee15653595a7e9126246dee444e5
+# Source0-md5:	bd5d91900044a1159129c6feeea612c4
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-home_etc.patch
 Patch2:		%{name}-debug_audtag.patch
