@@ -23,10 +23,10 @@ BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
-Suggests:	%{name}-general-skins
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
 Requires:	audacious-transport-unix_io
+Suggests:	%{name}-general-skins
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
