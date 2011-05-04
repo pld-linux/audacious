@@ -1,6 +1,13 @@
---- audacious-2.3/audacious2.desktop~	2010-04-06 21:01:24.000000000 +0100
-+++ audacious-2.3/audacious2.desktop	2010-04-08 14:51:01.784418557 +0100
-@@ -14,6 +14,7 @@
+--- audacious-2.5.0/audacious.desktop~	2011-04-16 18:09:10.000000000 +0200
++++ audacious-2.5.0/audacious.desktop	2011-05-04 12:41:43.403333840 +0200
+@@ -1,6 +1,4 @@
+ [Desktop Entry]
+-Version=1.0
+-
+ Type=Application
+ 
+ Name=Audacious
+@@ -14,6 +12,7 @@
  GenericName[lt]=Muzikos grotuvas
  GenericName[nl]=Muziekspeler
  GenericName[nb]=Lydavspiller
@@ -8,9 +15,9 @@
  GenericName[pt]=Leitor de Música
  GenericName[ro]=Lector de Muzică
  GenericName[ru]=Аудиоплеер
-@@ -26,13 +27,14 @@
- Comment[it]=Ascoltare musica
+@@ -27,13 +26,13 @@
  Comment[lt]=Klausyti muzikos
+ Comment[nb]=Lytt til musikk
  Comment[nl]=Muziek luisteren
 +Comment[pl]=Odtwarzacz muzyki
  Comment[ru]=Слушайте музыку
@@ -18,9 +25,9 @@
  Icon=audacious
  
 -Categories=AudioVideo;Audio;Player;GTK;
- 
- Exec=audacious2 %U
- TryExec=audacious2
+-
+ Exec=audacious %U
+ TryExec=audacious
  Terminal=false
- MimeType=application/x-ogg;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-wav;audio/x-xm;application/ogg;audio/x-vorbis+ogg;application/xspf+xml;application/x-cue;
+ MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;x-content/audio-cdda;
 +Categories=GTK;AudioVideo;Player;
