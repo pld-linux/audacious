@@ -2,15 +2,13 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	2.4.4
+Version:	2.5.0
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tgz
-# Source0-md5:	329fdd9ec25456010ee90953aaa7fc0e
+# Source0-md5:	86ee51499b2c44ca6d2f4f19072c8114
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-home_etc.patch
-Patch2:		%{name}-debug_audtag.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -19,7 +17,7 @@ BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
-BuildRequires:	libmowgli-devel >= 0.4.0
+BuildRequires:	libmowgli-devel >= 0.9.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
 BuildRequires:	pkgconfig
@@ -118,8 +116,6 @@ multimedialnego Audacious.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %{__aclocal} -I m4
@@ -135,9 +131,6 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# there is already .desktop in %{_desktopdir}
-rm -rf $RPM_BUILD_ROOT%{_datadir}/audacious/applications
 
 [ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
 	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
@@ -163,8 +156,8 @@ EOF
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/audacious2
-%attr(755,root,root) %{_bindir}/audtool2
+%attr(755,root,root) %{_bindir}/audacious
+%attr(755,root,root) %{_bindir}/audtool
 %{_mandir}/man*/*
 %dir %{_datadir}/audacious
 %dir %{_datadir}/audacious/images
