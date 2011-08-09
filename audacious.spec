@@ -29,8 +29,13 @@ Requires:	audacious-transport-unix_io
 Suggests:	%{name}-general-skins
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
+Obsoletes:	audacious-effect-ladspa
+Obsoletes:	audacious-general-alarm
 Obsoletes:	audacious-general-audioscrobbler
 Obsoletes:	audacious-general-curl
+Obsoletes:	audacious-general-evdev
+Obsoletes:	audacious-general-lirc
+Obsoletes:	audacious-general-streambrowser
 Obsoletes:	audacious-general-vfstrace
 Obsoletes:	audacious-input-alac
 Obsoletes:	audacious-input-cdaudio
@@ -56,8 +61,11 @@ Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
 Obsoletes:	audacious-visualization-iris
+Obsoletes:	audacious-visualization-paranormal
+Obsoletes:	audacious-visualization-projectM
 Obsoletes:	audacious-visualization-rootvis
 Obsoletes:	audacious-visualization-rovascope
+Obsoletes:	audacious-visualization-spectrum
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
