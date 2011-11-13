@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó r
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
 Version:	3.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tar.gz
@@ -30,8 +30,6 @@ Requires:	audacious-transport-unix_io
 Suggests:	%{name}-general-skins
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
-Obsoletes:	audacious-effect-ladspa
-Obsoletes:	audacious-general-alarm
 Obsoletes:	audacious-general-audioscrobbler
 Obsoletes:	audacious-general-curl
 Obsoletes:	audacious-general-evdev
@@ -43,7 +41,6 @@ Obsoletes:	audacious-input-cdaudio
 Obsoletes:	audacious-input-cube
 Obsoletes:	audacious-input-demac
 Obsoletes:	audacious-input-flac
-Obsoletes:	audacious-input-madplug
 Obsoletes:	audacious-input-mikmod
 Obsoletes:	audacious-input-mpc
 Obsoletes:	audacious-input-mpg123
@@ -63,8 +60,10 @@ Obsoletes:	audacious-output-lame
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
 Obsoletes:	audacious-visualization-iris
+Obsoletes:	audacious-visualization-moodbar
 Obsoletes:	audacious-visualization-paranormal
 Obsoletes:	audacious-visualization-projectM
+Obsoletes:	audacious-visualization-rocklight
 Obsoletes:	audacious-visualization-rootvis
 Obsoletes:	audacious-visualization-rovascope
 Obsoletes:	audacious-visualization-spectrum
