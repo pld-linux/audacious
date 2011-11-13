@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	3.0.3
+Version:	3.1
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.atheme.org/%{name}-%{version}.tar.gz
-# Source0-md5:	db5841c328a19c62d1a90b5292e38226
+# Source0-md5:	a20fdf5d0348235e0a5e22c5aca69629
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -17,6 +17,7 @@ BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	home-etc-devel
+BuildRequires:	libguess-devel
 BuildRequires:	libmowgli-devel >= 0.9.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
@@ -131,7 +132,6 @@ multimedialnego Audacious.
 %{__autoconf}
 %{__autoheader}
 %configure
-
 %{__make}
 
 %install
