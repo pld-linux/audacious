@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
 Name:		audacious
-Version:	3.1.1
+Version:	3.2.1
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
-Source0:	http://distfiles.atheme.org/%{name}-%{version}.tar.gz
-# Source0-md5:	60e5452e8fdbe749529d8add07b0dbe8
+Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
+# Source0-md5:	77468d00e8bd47c92f818fcae0090931
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -76,8 +76,8 @@ Audacious is a media player based on BMP. Since the development of the
 former project had been terminated, this fork was created.
 
 %description -l hu.UTF-8
-Audacious egy BMP-n alapuló médialejátszó. Amióta a kiinduló projekt
-fejlesztése abbamaradt, ez a leszármazott létrejött.
+Audacious egy BMP-n alapuló médialejátszó. Amióta a kiinduló
+projekt fejlesztése abbamaradt, ez a leszármazott létrejött.
 
 %description -l pl.UTF-8
 Audacious to odtwarzacz mediów oparty na BMP. Powstał on ponieważ
