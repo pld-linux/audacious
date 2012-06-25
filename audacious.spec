@@ -1,13 +1,13 @@
-Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+2
-Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+2-t használó rendszerekhez
-Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+2
+Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
+Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
+Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
-Version:	3.2.1
+Version:	3.2.3
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	77468d00e8bd47c92f818fcae0090931
+# Source0-md5:	322d9281168b92e3ef4e9334e6a2d5f3
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -15,9 +15,9 @@ BuildRequires:	automake
 BuildRequires:	dbus-devel >= 0.60
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+2-devel >= 2:2.6.0
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	home-etc-devel
-BuildRequires:	libguess-devel
+BuildRequires:	libguess-devel >= 1.1
 BuildRequires:	libmowgli-devel >= 0.9.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	mcs-devel >= 0.4.0
@@ -88,7 +88,7 @@ Summary:	Audacious media player library
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
-Requires:	gtk+2 >= 2:2.6.0
+Requires:	gtk+3 >= 3.0.0
 Requires:	libmowgli >= 0.4.0
 
 %description libs
@@ -107,7 +107,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	dbus-glib-devel
-Requires:	gtk+2-devel >= 2:2.6.0
+Requires:	gtk+3-devel >= 3.0.0
 Requires:	home-etc-devel
 Requires:	libmowgli-devel >= 0.4.0
 Requires:	mcs-devel
