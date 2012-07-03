@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
-Version:	3.2.3
+Version:	3.2.4
 Release:	1
 License:	GPL
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	322d9281168b92e3ef4e9334e6a2d5f3
+# Source0-md5:	7d1cabdaf5188abb4deddf628535a955
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -76,8 +76,8 @@ Audacious is a media player based on BMP. Since the development of the
 former project had been terminated, this fork was created.
 
 %description -l hu.UTF-8
-Audacious egy BMP-n alapuló médialejátszó. Amióta a kiinduló
-projekt fejlesztése abbamaradt, ez a leszármazott létrejött.
+Audacious egy BMP-n alapuló médialejátszó. Amióta a kiinduló projekt
+fejlesztése abbamaradt, ez a leszármazott létrejött.
 
 %description -l pl.UTF-8
 Audacious to odtwarzacz mediów oparty na BMP. Powstał on ponieważ
@@ -89,7 +89,7 @@ Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
 Group:		X11/Applications/Sound
 Requires:	gtk+3 >= 3.0.0
-Requires:	libmowgli >= 0.4.0
+Requires:	libmowgli >= 0.9.0
 
 %description libs
 Audacious media player library.
@@ -106,11 +106,11 @@ Summary(hu.UTF-8):	Az audacious fejlécfájljai
 Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	dbus-glib-devel
+Requires:	dbus-glib-devel >= 0.60
 Requires:	gtk+3-devel >= 3.0.0
 Requires:	home-etc-devel
-Requires:	libmowgli-devel >= 0.4.0
-Requires:	mcs-devel
+Requires:	libmowgli-devel >= 0.9.0
+Requires:	mcs-devel >= 0.4.0
 
 %description devel
 Header files required for compiling Audacious media player plugins.
@@ -140,9 +140,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
-	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
-mv $RPM_BUILD_ROOT%{_datadir}/locale/pt{_PT,}
+[ -d $RPM_BUILD_ROOT%{_localedir}/sr@latin ] || \
+	mv -f $RPM_BUILD_ROOT%{_localedir}/sr@{Latn,latin}
+mv $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 %find_lang %{name}
 
 %clean
