@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
-Version:	3.2.4
+Version:	3.3.1
 Release:	1
-License:	GPL
+License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	7d1cabdaf5188abb4deddf628535a955
+# Source0-md5:	06a11023fcbcdfe07d2232d8340fb61e
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -34,6 +34,7 @@ Obsoletes:	audacious-general-audioscrobbler
 Obsoletes:	audacious-general-curl
 Obsoletes:	audacious-general-evdev
 Obsoletes:	audacious-general-lirc
+Obsoletes:	audacious-general-mtp_up
 Obsoletes:	audacious-general-streambrowser
 Obsoletes:	audacious-general-vfstrace
 Obsoletes:	audacious-input-alac
@@ -57,6 +58,8 @@ Obsoletes:	audacious-output-arts
 Obsoletes:	audacious-output-disk
 Obsoletes:	audacious-output-icecast
 Obsoletes:	audacious-output-lame
+Obsoletes:	audacious-output-null
+Obsoletes:	audacious-output-oss
 Obsoletes:	audacious-static
 Obsoletes:	audacious-transport-curl
 Obsoletes:	audacious-visualization-iris
@@ -142,6 +145,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 
 [ -d $RPM_BUILD_ROOT%{_localedir}/sr@latin ] || \
 	mv -f $RPM_BUILD_ROOT%{_localedir}/sr@{Latn,latin}
+mv $RPM_BUILD_ROOT%{_localedir}/fa{_IR,}
+mv $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 mv $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 %find_lang %{name}
 
@@ -164,6 +169,7 @@ EOF
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
+%doc AUTHORS COPYING
 %attr(755,root,root) %{_bindir}/audacious
 %attr(755,root,root) %{_bindir}/audtool
 %{_mandir}/man*/*
@@ -172,8 +178,6 @@ EOF
 %{_datadir}/audacious/images/*
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/apps/audacious.*
-%{_pixmapsdir}/*.png
-%{_pixmapsdir}/*.svg
 
 %files libs
 %defattr(644,root,root,755)
