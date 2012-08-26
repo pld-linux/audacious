@@ -1,6 +1,6 @@
-diff -uNr audacious-3.2.3.orig/audacious.desktop audacious-3.2.3/audacious.desktop
---- audacious-3.2.3.orig/audacious.desktop	2012-05-26 13:42:34.000000000 +0200
-+++ audacious-3.2.3/audacious.desktop	2012-06-25 13:54:22.486297528 +0200
+diff -uNr audacious-3.3.1.orig/audacious.desktop audacious-3.3.1/audacious.desktop
+--- audacious-3.3.1.orig/audacious.desktop	2012-08-11 22:11:00.000000000 +0200
++++ audacious-3.3.1/audacious.desktop	2012-08-26 11:05:00.000000000 +0200
 @@ -1,6 +1,4 @@
  [Desktop Entry]
 -Version=1.0
@@ -30,5 +30,6 @@ diff -uNr audacious-3.2.3.orig/audacious.desktop audacious-3.2.3/audacious.deskt
  Exec=audacious %U
  TryExec=audacious
  Terminal=false
- MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;inode/directory;x-content/audio-cdda;
+-MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;inode/directory;x-content/audio-cdda;
++MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;x-content/audio-cdda;
 +Categories=GTK;AudioVideo;Player;
