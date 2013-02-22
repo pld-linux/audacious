@@ -86,21 +86,21 @@ Audacious to odtwarzacz mediów oparty na BMP. Powstał on ponieważ
 rozwój pierwowzoru został zakończony.
 
 %package libs
-Summary:	Audacious media player library
+Summary:	Audacious media player libraries
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
-Summary(pl.UTF-8):	Biblioteka odtwarzacza multimedialnego Audacious
-Group:		X11/Applications/Sound
+Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
+Group:		X11/Libraries
 Requires:	gtk+3 >= 3.0.0
 Requires:	libmowgli >= 0.9.0
 
 %description libs
-Audacious media player library.
+Audacious media player libraries.
 
 %description libs -l hu.UTF-8
 Audacious médialejátszó könyvtár.
 
 %description libs -l pl.UTF-8
-Biblioteka odtwarzacza multimedialnego Audacious.
+Biblioteki odtwarzacza multimedialnego Audacious.
 
 %package devel
 Summary:	Header files for Audacious media player
@@ -142,11 +142,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-[ -d $RPM_BUILD_ROOT%{_localedir}/sr@latin ] || \
-	mv -f $RPM_BUILD_ROOT%{_localedir}/sr@{Latn,latin}
-mv $RPM_BUILD_ROOT%{_localedir}/fa{_IR,}
-mv $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
-mv $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/fa{_IR,}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 %find_lang %{name}
 
 %clean
@@ -171,23 +169,23 @@ EOF
 %doc AUTHORS COPYING
 %attr(755,root,root) %{_bindir}/audacious
 %attr(755,root,root) %{_bindir}/audtool
-%{_mandir}/man*/*
+%{_mandir}/man1/audacious.1*
+%{_mandir}/man1/audtool.1*
 %dir %{_datadir}/audacious
-%dir %{_datadir}/audacious/images
-%{_datadir}/audacious/images/*
-%{_desktopdir}/*.desktop
+%{_datadir}/audacious/images
+%{_desktopdir}/audacious.desktop
 %{_iconsdir}/hicolor/*/apps/audacious.*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudclient.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudclient.so.2
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.1
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.1
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.?
+%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.1
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
