@@ -70,6 +70,8 @@ Obsoletes:	audacious-visualization-rovascope
 Obsoletes:	audacious-visualization-spectrum
 Obsoletes:	beep-media-player
 Obsoletes:	bmp
+Obsoletes:	bmp-visualization-minilcd
+Obsoletes:	bmp-visualization-wmdiscotux
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
