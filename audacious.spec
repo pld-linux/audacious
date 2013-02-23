@@ -16,7 +16,6 @@ BuildRequires:	dbus-devel >= 0.60
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+3-devel >= 3.0.0
-BuildRequires:	home-etc-devel
 BuildRequires:	libguess-devel >= 1.1
 BuildRequires:	libmowgli-devel >= 0.9.0
 BuildRequires:	libstdc++-devel
@@ -69,6 +68,8 @@ Obsoletes:	audacious-visualization-rocklight
 Obsoletes:	audacious-visualization-rootvis
 Obsoletes:	audacious-visualization-rovascope
 Obsoletes:	audacious-visualization-spectrum
+Obsoletes:	beep-media-player
+Obsoletes:	bmp
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -92,6 +93,8 @@ Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
 Group:		X11/Libraries
 Requires:	gtk+3 >= 3.0.0
 Requires:	libmowgli >= 0.9.0
+Obsoletes:	beep-media-player-libs
+Obsoletes:	bmp-libs
 
 %description libs
 Audacious media player libraries.
@@ -110,9 +113,12 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	dbus-glib-devel >= 0.60
 Requires:	gtk+3-devel >= 3.0.0
-Requires:	home-etc-devel
 Requires:	libmowgli-devel >= 0.9.0
 Requires:	mcs-devel >= 0.4.0
+Obsoletes:	beep-media-player-devel
+Obsoletes:	beep-media-player-static
+Obsoletes:	bmp-devel
+Obsoletes:	bmp-static
 
 %description devel
 Header files required for compiling Audacious media player plugins.
