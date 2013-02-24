@@ -3,7 +3,7 @@ Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó re
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
 Version:	3.3.4
-Release:	1
+Release:	2
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
