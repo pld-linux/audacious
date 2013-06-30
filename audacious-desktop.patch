@@ -16,13 +16,14 @@ diff -uNr audacious-3.3.1.orig/audacious.desktop audacious-3.3.1/audacious.deskt
  GenericName[pt]=Leitor de Música
  GenericName[ro]=Lector de Muzică
  GenericName[ru]=Аудиоплеер
-@@ -27,13 +26,13 @@
+@@ -27,14 +27,14 @@
  Comment[lt]=Klausyti muzikos
  Comment[nb]=Lytt til musikk
  Comment[nl]=Muziek luisteren
 +Comment[pl]=Odtwarzacz muzyki
  Comment[ru]=Слушайте музыку
  Comment[es]=Escucha música
+ Comment[zh_TW]=音樂鑑賞
  Icon=audacious
  
 -Categories=AudioVideo;Audio;Player;GTK;
