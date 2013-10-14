@@ -2,12 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
-Version:	3.4
+Version:	3.4.1
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	b97b6921eab3eedbd63dcce2c15154e0
+# Source0-md5:	f7f00c2b7d50f2da42be457efe2c376d
 Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
@@ -140,7 +140,8 @@ multimedialnego Audacious.
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
-%configure
+%configure \
+	--enable-thunar
 %{__make}
 
 %install
@@ -182,6 +183,7 @@ EOF
 %dir %{_datadir}/audacious
 %{_datadir}/audacious/images
 %{_desktopdir}/audacious.desktop
+%{_datadir}/Thunar/sendto/thunar-sendto-audacious-playlist.desktop
 %{_iconsdir}/hicolor/*/apps/audacious.*
 
 %files libs
