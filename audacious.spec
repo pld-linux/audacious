@@ -12,14 +12,15 @@ Patch0:		%{name}-desktop.patch
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	cairo-devel >= 1.6
 BuildRequires:	dbus-devel >= 0.60
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel >= 1:2.28
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	libguess-devel >= 1.1
-BuildRequires:	libmowgli-devel >= 0.9.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	mcs-devel >= 0.4.0
+BuildRequires:	pango-devel >= 1:1.20
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
 Requires(post,postun):	desktop-file-utils
@@ -93,8 +94,10 @@ Summary:	Audacious media player libraries
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
 Group:		X11/Libraries
+Requires:	cairo >= 1.6
+Requires:	glib2 >= 1:2.28
 Requires:	gtk+3 >= 3.0.0
-Requires:	libmowgli >= 0.9.0
+Requires:	pango >= 1:1.20
 Obsoletes:	beep-media-player-libs
 Obsoletes:	bmp-libs
 
@@ -113,10 +116,11 @@ Summary(hu.UTF-8):	Az audacious fejlécfájljai
 Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	cairo-devel >= 1.6
 Requires:	dbus-glib-devel >= 0.60
+Requires:	glib2-devel >= 1:2.28
 Requires:	gtk+3-devel >= 3.0.0
-Requires:	libmowgli-devel >= 0.9.0
-Requires:	mcs-devel >= 0.4.0
+Requires:	pango-devel >= 1:1.20
 Obsoletes:	beep-media-player-devel
 Obsoletes:	beep-media-player-static
 Obsoletes:	bmp-devel
