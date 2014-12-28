@@ -15,7 +15,7 @@ BuildRequires:	automake
 BuildRequires:	cairo-devel >= 1.6
 BuildRequires:	dbus-devel >= 0.60
 BuildRequires:	dbus-glib-devel >= 0.60
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.28
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	libguess-devel >= 1.1
