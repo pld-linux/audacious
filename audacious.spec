@@ -143,6 +143,9 @@ multimedialnego Audacious.
 %prep
 %setup -q
 
+# verbose build
+sed -i '\,^.SILENT:,d' buildsys.mk.in
+
 %build
 %{__aclocal} -I m4
 %{__autoconf}
