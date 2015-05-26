@@ -166,7 +166,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/sr{_RS,}
+rm -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
 %find_lang %{name}
 
 %clean
