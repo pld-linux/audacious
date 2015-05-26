@@ -2,13 +2,12 @@ Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
 Name:		audacious
-Version:	3.4.3
-Release:	2
+Version:	3.6.1
+Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	3935e3c1e6bdc2907ce2672a85476f20
-Patch0:		%{name}-desktop.patch
+# Source0-md5:	8bfec6d11a05f4be6cf9eab4e18be307
 URL:		http://audacious-media-player.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -138,7 +137,6 @@ multimedialnego Audacious.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__aclocal} -I m4
@@ -188,19 +186,16 @@ EOF
 %dir %{_datadir}/audacious
 %{_datadir}/audacious/images
 %{_desktopdir}/audacious.desktop
-%{_datadir}/Thunar/sendto/thunar-sendto-audacious-playlist.desktop
 %{_iconsdir}/hicolor/*/apps/audacious.*
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudclient.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudclient.so.2
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.1
+%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.3
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.1
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.3
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.1
+%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.2
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -212,7 +207,6 @@ EOF
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudclient.so
 %attr(755,root,root) %{_libdir}/libaudcore.so
 %attr(755,root,root) %{_libdir}/libaudgui.so
 %attr(755,root,root) %{_libdir}/libaudtag.so
@@ -220,4 +214,3 @@ EOF
 %{_includedir}/libaudcore
 %{_includedir}/libaudgui
 %{_pkgconfigdir}/audacious.pc
-%{_pkgconfigdir}/audclient.pc
