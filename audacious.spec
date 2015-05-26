@@ -1,3 +1,5 @@
+# TODO:
+# - split gtk and qt libs
 Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
@@ -9,6 +11,9 @@ Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 # Source0-md5:	8bfec6d11a05f4be6cf9eab4e18be307
 URL:		http://audacious-media-player.org/
+BuildRequires:	Qt5Core-devel
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Widgets-devel
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	cairo-devel >= 1.6
@@ -143,7 +148,8 @@ multimedialnego Audacious.
 %{__autoconf}
 %{__autoheader}
 %configure \
-	--enable-thunar
+	--enable-thunar \
+	--enable-qt
 %{__make}
 
 %install
@@ -157,6 +163,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/sr{_RS,}
 %find_lang %{name}
 
 %clean
@@ -194,6 +201,8 @@ EOF
 %attr(755,root,root) %ghost %{_libdir}/libaudcore.so.3
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudgui.so.3
+%attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.0
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.2
 %dir %{_libdir}/%{name}
@@ -209,8 +218,10 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudcore.so
 %attr(755,root,root) %{_libdir}/libaudgui.so
+%attr(755,root,root) %{_libdir}/libaudqt.so
 %attr(755,root,root) %{_libdir}/libaudtag.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
 %{_includedir}/libaudgui
+%{_includedir}/libaudqt
 %{_pkgconfigdir}/audacious.pc
