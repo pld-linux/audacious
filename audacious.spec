@@ -1,32 +1,40 @@
 # TODO:
-# - split gtk and qt libs
-Summary:	Sound player with the WinAmp GUI, for Unix-based systems for GTK+
-Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+-t használó rendszerekhez
-Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+
+# - split gtk and qt GUI libs (libaudcore requires both glib and Qt5Core though)
+#
+# Conditional build:
+%bcond_without	gtk	# GTK+ support
+%bcond_without	qt	# Qt support
+#
+Summary:	Sound player with the WinAmp GUI, for GTK+/Qt
+Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó rendszerekhez
+Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
 Name:		audacious
-Version:	3.6.1
-Release:	3
+Version:	3.6.2
+Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	8bfec6d11a05f4be6cf9eab4e18be307
+# Source0-md5:	79132b694714c90dbcd8593919abed1c
 URL:		http://audacious-media-player.org/
-BuildRequires:	Qt5Core-devel
-BuildRequires:	Qt5Gui-devel
-BuildRequires:	Qt5Widgets-devel
+%if %{with qt}
+BuildRequires:	Qt5Core-devel >= 5
+BuildRequires:	Qt5Gui-devel >= 5
+BuildRequires:	Qt5Widgets-devel >= 5
+%endif
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	cairo-devel >= 1.6
-BuildRequires:	dbus-devel >= 0.60
-BuildRequires:	dbus-glib-devel >= 0.60
+%{?with_cairo:BuildRequires:	cairo-devel >= 1.6}
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.28
-BuildRequires:	gtk+3-devel >= 3.0.0
-BuildRequires:	libguess-devel >= 1.1
-BuildRequires:	libstdc++-devel
-BuildRequires:	pango-devel >= 1:1.20
+# -std=gnu++11
+BuildRequires:	gcc-c++ >= 6:4.7
+BuildRequires:	glib2-devel >= 1:2.32
+%{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.24}
+BuildRequires:	libguess-devel >= 1.2
+BuildRequires:	libstdc++-devel >= 6:4.7
+%{?with_gtk:BuildRequires:	pango-devel >= 1:1.20}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.198
+BuildRequires:	sed >= 4.0
 Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
@@ -98,10 +106,11 @@ Summary:	Audacious media player libraries
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
 Group:		X11/Libraries
-Requires:	cairo >= 1.6
-Requires:	glib2 >= 1:2.28
-Requires:	gtk+3 >= 3.0.0
-Requires:	pango >= 1:1.20
+%{?with_gtk:Requires:	cairo >= 1.6}
+Requires:	glib2 >= 1:2.32
+%{?with_gtk:Requires:	gtk+2 >= 2:2.24}
+Requires:	libguess >= 1.2
+%{?with_gtk:Requires:	pango >= 1:1.20}
 Obsoletes:	beep-media-player-libs
 Obsoletes:	bmp-libs
 
@@ -120,11 +129,12 @@ Summary(hu.UTF-8):	Az audacious fejlécfájljai
 Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	cairo-devel >= 1.6
-Requires:	dbus-glib-devel >= 0.60
-Requires:	glib2-devel >= 1:2.28
-Requires:	gtk+3-devel >= 3.0.0
-Requires:	pango-devel >= 1:1.20
+%{?with_qt:Requires:	Qt5Core-devel >= 5}
+%{?with_qt:Requires:	Qt5Widgets-devel >= 5}
+%{?with_gtk:Requires:	cairo-devel >= 1.6}
+Requires:	glib2-devel >= 1:2.32
+%{?with_gtk:Requires:	gtk+2-devel >= 2:2.24}
+%{?with_gtk:Requires:	pango-devel >= 1:1.20}
 Obsoletes:	beep-media-player-devel
 Obsoletes:	beep-media-player-static
 Obsoletes:	bmp-devel
@@ -144,15 +154,16 @@ multimedialnego Audacious.
 %setup -q
 
 # verbose build
-sed -i '\,^.SILENT:,d' buildsys.mk.in
+%{__sed} -i '/^\.SILENT:/d' buildsys.mk.in
 
 %build
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %configure \
-	--enable-thunar \
-	--enable-qt
+	%{!?with_gtk:--disable-gtk} \
+	%{?with_qt:--enable-qt} \
+	--enable-thunar
 %{__make}
 
 %install
@@ -166,7 +177,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
-rm -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
 %find_lang %{name}
 
 %clean
@@ -202,10 +213,14 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudcore.so.3
+%if %{with gtk}
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudgui.so.3
+%endif
+%if %{with qt}
 %attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudqt.so.0
+%endif
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.2
 %dir %{_libdir}/%{name}
@@ -220,11 +235,15 @@ EOF
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudcore.so
-%attr(755,root,root) %{_libdir}/libaudgui.so
-%attr(755,root,root) %{_libdir}/libaudqt.so
 %attr(755,root,root) %{_libdir}/libaudtag.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
+%if %{with gtk}
+%attr(755,root,root) %{_libdir}/libaudgui.so
 %{_includedir}/libaudgui
+%endif
+%if %{with qt}
+%attr(755,root,root) %{_libdir}/libaudqt.so
 %{_includedir}/libaudqt
+%endif
 %{_pkgconfigdir}/audacious.pc
