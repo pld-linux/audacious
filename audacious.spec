@@ -1,5 +1,3 @@
-# TODO:
-# - split gtk and qt GUI libs (libaudcore requires both glib and Qt5Core though)
 #
 # Conditional build:
 %bcond_without	gtk	# GTK+ support
@@ -10,16 +8,16 @@ Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
 Name:		audacious
 Version:	3.8.2
-Release:	1
+Release:	2
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 # Source0-md5:	e5172095152678ede37aadd0e82d161f
 URL:		http://audacious-media-player.org/
 %if %{with qt}
-BuildRequires:	Qt5Core-devel >= 5
-BuildRequires:	Qt5Gui-devel >= 5
-BuildRequires:	Qt5Widgets-devel >= 5
+BuildRequires:	Qt5Core-devel >= 5.2
+BuildRequires:	Qt5Gui-devel >= 5.2
+BuildRequires:	Qt5Widgets-devel >= 5.2
 %endif
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -105,12 +103,10 @@ rozwój pierwowzoru został zakończony.
 Summary:	Audacious media player libraries
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
-Group:		X11/Libraries
-%{?with_gtk:Requires:	cairo >= 1.6}
+Group:		Libraries
+%{?with_qt:Requires:	Qt5Core >= 5.2}
 Requires:	glib2 >= 1:2.32
-%{?with_gtk:Requires:	gtk+2 >= 2:2.24}
 Requires:	libguess >= 1.2
-%{?with_gtk:Requires:	pango >= 1:1.20}
 Obsoletes:	beep-media-player-libs
 Obsoletes:	bmp-libs
 
@@ -127,14 +123,9 @@ Biblioteki odtwarzacza multimedialnego Audacious.
 Summary:	Header files for Audacious media player
 Summary(hu.UTF-8):	Az audacious fejlécfájljai
 Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
-Group:		X11/Development/Libraries
+Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-%{?with_qt:Requires:	Qt5Core-devel >= 5}
-%{?with_qt:Requires:	Qt5Widgets-devel >= 5}
-%{?with_gtk:Requires:	cairo-devel >= 1.6}
 Requires:	glib2-devel >= 1:2.32
-%{?with_gtk:Requires:	gtk+2-devel >= 2:2.24}
-%{?with_gtk:Requires:	pango-devel >= 1:1.20}
 Obsoletes:	beep-media-player-devel
 Obsoletes:	beep-media-player-static
 Obsoletes:	bmp-devel
@@ -148,6 +139,70 @@ Az audacious fejlécfájljai.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe potrzebne do kompilowania wtyczek odtwarzacza
+multimedialnego Audacious.
+
+%package libs-gtk
+Summary:	Audacious GTK+ GUI library
+Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ odtwarzacza multimedialnego Audacious
+Group:		X11/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	cairo >= 1.6
+Requires:	gtk+2 >= 2:2.24
+Requires:	pango >= 1:1.20
+
+%description libs-gtk
+Audacious GTK+ GUI library.
+
+%description libs-gtk -l pl.UTF-8
+Biblioteka graficznego interfejsu GTK+ odtwarzacza multimedialnego
+Audacious.
+
+%package libs-gtk-devel
+Summary:	Header files for Audacious GTK+ GUI library
+Summary(pl.UTF-8):	Pliki nagłówkowe graficznego interfejsu GTK+ odtwarzacza multimedialnego Audacious
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-libs-gtk = %{version}-%{release}
+Requires:	cairo-devel >= 1.6
+Requires:	gtk+2-devel >= 2:2.24
+Requires:	pango-devel >= 1:1.20
+
+%description libs-gtk-devel
+Header files for Audacious GTK+ GUI library.
+
+%description libs-gtk-devel -l pl.UTF-8
+Pliki nagłówkowe graficznego interfejsu GTK+ odtwarzacza
+multimedialnego Audacious.
+
+%package libs-qt
+Summary:	Audacious Qt GUI library
+Summary(pl.UTF-8):	Biblioteka graficznego interfejsu Qt odtwarzacza multimedialnego Audacious
+Group:		X11/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	Qt5Gui >= 5.2
+Requires:	Qt5Widgets >= 5.2
+
+%description libs-qt
+Audacious Qt GUI library.
+
+%description libs-qt -l pl.UTF-8
+Biblioteka graficznego interfejsu Qt odtwarzacza multimedialnego
+Audacious.
+
+%package libs-qt-devel
+Summary:	Header files for Audacious Qt GUI library
+Summary(pl.UTF-8):	Pliki nagłówkowe graficznego interfejsu Qt odtwarzacza multimedialnego Audacious
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-libs-qt = %{version}-%{release}
+Requires:	Qt5Gui-devel >= 5.2
+Requires:	Qt5Widgets-devel >= 5.2
+
+%description libs-qt-devel
+Header files for Audacious Qt GUI library.
+
+%description libs-qt-devel -l pl.UTF-8
+Pliki nagłówkowe graficznego interfejsu Qt odtwarzacza
 multimedialnego Audacious.
 
 %prep
@@ -177,6 +232,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
+# outdated version of sr
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
 %find_lang %{name}
 
@@ -197,6 +253,12 @@ EOF
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
+%post	libs-gtk -p /sbin/ldconfig
+%postun	libs-gtk -p /sbin/ldconfig
+
+%post	libs-qt -p /sbin/ldconfig
+%postun	libs-qt -p /sbin/ldconfig
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING
@@ -213,14 +275,6 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudcore.so.4
-%if %{with gtk}
-%attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.4
-%endif
-%if %{with qt}
-%attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.1
-%endif
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.3
 %dir %{_libdir}/%{name}
@@ -238,12 +292,28 @@ EOF
 %attr(755,root,root) %{_libdir}/libaudtag.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
+%{_pkgconfigdir}/audacious.pc
+
 %if %{with gtk}
+%files libs-gtk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.4
+
+%files libs-gtk-devel
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudgui.so
 %{_includedir}/libaudgui
 %endif
+
 %if %{with qt}
+%files libs-qt
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.1
+
+%files libs-qt-devel
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudqt.so
 %{_includedir}/libaudqt
 %endif
-%{_pkgconfigdir}/audacious.pc
