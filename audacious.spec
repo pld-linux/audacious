@@ -7,12 +7,12 @@ Summary:	Sound player with the WinAmp GUI, for GTK+/Qt
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
 Name:		audacious
-Version:	3.8.2
-Release:	2
+Version:	3.9
+Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	e5172095152678ede37aadd0e82d161f
+# Source0-md5:	11d2b36f66c79e60ada9e1f6208abf19
 URL:		http://audacious-media-player.org/
 %if %{with qt}
 BuildRequires:	Qt5Core-devel >= 5.2
@@ -274,7 +274,7 @@ EOF
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.4
+%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.5
 %attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libaudtag.so.3
 %dir %{_libdir}/%{name}
@@ -298,7 +298,7 @@ EOF
 %files libs-gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.4
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.5
 
 %files libs-gtk-devel
 %defattr(644,root,root,755)
@@ -310,7 +310,7 @@ EOF
 %files libs-qt
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.1
+%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.2
 
 %files libs-qt-devel
 %defattr(644,root,root,755)
