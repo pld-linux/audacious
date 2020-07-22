@@ -7,12 +7,12 @@ Summary:	Sound player with the WinAmp GUI, for GTK+/Qt
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
 Name:		audacious
-Version:	3.10
+Version:	4.0.5
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	95c79e14c412f274624c6979236a3840
+# Source0-md5:	a2e8420ce841cb18ff380d7ad0185651
 URL:		http://audacious-media-player.org/
 %if %{with qt}
 BuildRequires:	Qt5Core-devel >= 5.2
@@ -24,10 +24,10 @@ BuildRequires:	automake
 %{?with_cairo:BuildRequires:	cairo-devel >= 1.6}
 BuildRequires:	gettext-tools
 # -std=gnu++11
-BuildRequires:	gcc-c++ >= 6:4.7
 BuildRequires:	glib2-devel >= 1:2.32
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.24}
 BuildRequires:	libguess-devel >= 1.2
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_gtk:BuildRequires:	pango-devel >= 1:1.20}
 BuildRequires:	pkgconfig
@@ -36,7 +36,8 @@ BuildRequires:	sed >= 4.0
 Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
-Suggests:	%{name}-general-skins
+Suggests:	audacious-general-gtkui = %{version}-%{release}
+Suggests:	audacious-general-qtui = %{version}-%{release}
 Obsoletes:	audacious-container-mms
 Obsoletes:	audacious-container-stdio
 Obsoletes:	audacious-general-audioscrobbler
@@ -202,8 +203,8 @@ Requires:	Qt5Widgets-devel >= 5.2
 Header files for Audacious Qt GUI library.
 
 %description libs-qt-devel -l pl.UTF-8
-Pliki nagłówkowe graficznego interfejsu Qt odtwarzacza
-multimedialnego Audacious.
+Pliki nagłówkowe graficznego interfejsu Qt odtwarzacza multimedialnego
+Audacious.
 
 %prep
 %setup -q
@@ -216,9 +217,8 @@ multimedialnego Audacious.
 %{__autoconf}
 %{__autoheader}
 %configure \
-	%{!?with_gtk:--disable-gtk} \
-	%{?with_qt:--enable-qt} \
-	--enable-thunar
+	%{?with_gtk:--enable-gtk} \
+	%{!?with_qt:--disable-qt}
 %{__make}
 
 %install
@@ -228,7 +228,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/fa{_IR,}
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/audacious/{AUTHORS,COPYING}
+%{__rm} $RPM_BUILD_ROOT%{_desktopdir}/audacious.desktop
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
@@ -243,12 +244,11 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 Remember to install appropriate input plugins for files
 you want to play!
+
+From version 4.0 audacious by default uses QT interface.
+To use audacious with GTK interface, run: audacious -G.
+
 EOF
-
-%update_desktop_database_post
-
-%postun
-%update_desktop_database_postun
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
@@ -267,7 +267,6 @@ EOF
 %{_mandir}/man1/audacious.1*
 %{_mandir}/man1/audtool.1*
 %dir %{_datadir}/audacious
-%{_desktopdir}/audacious.desktop
 %{_iconsdir}/hicolor/*/apps/audacious.*
 
 %files libs
