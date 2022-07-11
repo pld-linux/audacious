@@ -39,48 +39,41 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	audacious-output-plugin
 Suggests:	audacious-general-gtkui = %{version}-%{release}
 Suggests:	audacious-general-qtui = %{version}-%{release}
-Obsoletes:	audacious-container-mms
-Obsoletes:	audacious-container-stdio
-Obsoletes:	audacious-general-audioscrobbler
-Obsoletes:	audacious-general-curl
-Obsoletes:	audacious-general-evdev
-Obsoletes:	audacious-general-mtp_up
-Obsoletes:	audacious-general-streambrowser
-Obsoletes:	audacious-general-vfstrace
-Obsoletes:	audacious-input-alac
-Obsoletes:	audacious-input-cdaudio
-Obsoletes:	audacious-input-cube
-Obsoletes:	audacious-input-demac
-Obsoletes:	audacious-input-flac
-Obsoletes:	audacious-input-mikmod
-Obsoletes:	audacious-input-mpc
-Obsoletes:	audacious-input-mpg123
-Obsoletes:	audacious-input-mplayer
-Obsoletes:	audacious-input-musepack
-Obsoletes:	audacious-input-sap
-Obsoletes:	audacious-input-timidity
-Obsoletes:	audacious-input-tta
-Obsoletes:	audacious-input-wav
-Obsoletes:	audacious-input-wma
-Obsoletes:	audacious-output-ALSA
-Obsoletes:	audacious-output-OSS
-Obsoletes:	audacious-output-arts
-Obsoletes:	audacious-output-disk
-Obsoletes:	audacious-output-icecast
-Obsoletes:	audacious-output-lame
-Obsoletes:	audacious-output-null
-Obsoletes:	audacious-output-oss
-Obsoletes:	audacious-static
-Obsoletes:	audacious-transport-curl
-Obsoletes:	audacious-transport-unix_io
-Obsoletes:	audacious-visualization-iris
-Obsoletes:	audacious-visualization-moodbar
-Obsoletes:	audacious-visualization-paranormal
-Obsoletes:	audacious-visualization-projectM
-Obsoletes:	audacious-visualization-rocklight
-Obsoletes:	audacious-visualization-rootvis
-Obsoletes:	audacious-visualization-rovascope
-Obsoletes:	audacious-visualization-spectrum
+Obsoletes:	audacious-container-mms < 1.4
+Obsoletes:	audacious-container-stdio < 1.4
+Obsoletes:	audacious-effect-mixdown < 3.1
+Obsoletes:	audacious-general-curl < 1.4
+Obsoletes:	audacious-general-evdev < 3.0
+Obsoletes:	audacious-general-gnomeshortcuts < 3.10
+Obsoletes:	audacious-general-mtp_up < 3.3
+Obsoletes:	audacious-general-streambrowser < 3.0
+Obsoletes:	audacious-general-vfstrace < 2.4
+Obsoletes:	audacious-input-alac < 2.3
+Obsoletes:	audacious-input-cube < 1.4
+Obsoletes:	audacious-input-demac < 2.3
+Obsoletes:	audacious-input-sap < 1.4
+Obsoletes:	audacious-input-timidity < 2.3
+Obsoletes:	audacious-input-tta < 2.3
+Obsoletes:	audacious-input-wma < 2.3
+Obsoletes:	audacious-output-OSS < 0.1.1-1
+Obsoletes:	audacious-output-disk < 1.4
+Obsoletes:	audacious-output-icecast < 2.4
+Obsoletes:	audacious-output-lame < 1.4
+Obsoletes:	audacious-output-null < 3.3
+Obsoletes:	audacious-output-oss < 3.3
+Obsoletes:	audacious-static < 1.2
+Obsoletes:	audacious-transport-curl < 1.4
+Obsoletes:	audacious-transport-lastfm < 2.3
+Obsoletes:	audacious-transport-unix_io < 3.6
+Obsoletes:	audacious-visualization-iris < 1.4
+Obsoletes:	audacious-visualization-libvisual-proxy < 1.1
+Obsoletes:	audacious-visualization-moodbar < 3.1
+Obsoletes:	audacious-visualization-paranormal < 3.0
+Obsoletes:	audacious-visualization-projectM < 3.0
+Obsoletes:	audacious-visualization-rocklight < 3.1
+Obsoletes:	audacious-visualization-rootvis < 2.1
+Obsoletes:	audacious-visualization-rovascope < 1.4
+Obsoletes:	audacious-visualization-spectrum < 3.0
 Obsoletes:	beep-media-player
 Obsoletes:	bmp
 Obsoletes:	bmp-visualization-minilcd
