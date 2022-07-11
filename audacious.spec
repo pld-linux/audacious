@@ -236,6 +236,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 # outdated version of sr
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
+# unsupported
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/fa_IR
 %find_lang %{name}
 
 %clean
