@@ -7,12 +7,12 @@ Summary:	Sound player with the WinAmp GUI, for GTK+/Qt
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
 Name:		audacious
-Version:	4.1
+Version:	4.2
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	22fbe28b073682d55ee87698f283e195
+# Source0-md5:	3f76597aa1d2ea1501a93456b46d870f
 URL:		http://audacious-media-player.org/
 %if %{with qt}
 BuildRequires:	qt5-build >= 5.2
