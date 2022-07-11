@@ -11,9 +11,9 @@ Version:	4.2
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
-Source0:	http://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
+Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 # Source0-md5:	3f76597aa1d2ea1501a93456b46d870f
-URL:		http://audacious-media-player.org/
+URL:		https://audacious-media-player.org/
 %if %{with qt}
 BuildRequires:	qt5-build >= 5.2
 BuildRequires:	Qt5Core-devel >= 5.2
