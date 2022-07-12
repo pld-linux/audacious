@@ -77,8 +77,6 @@ Obsoletes:	beep-media-player < 1
 Obsoletes:	bmp < 1
 Obsoletes:	bmp-visualization-minilcd < 1
 Obsoletes:	bmp-visualization-wmdiscotux < 1
-# sr@Latn vs. sr@latin
-Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -223,13 +221,13 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/audacious/{AUTHORS,COPYING}
 %{__rm} $RPM_BUILD_ROOT%{_desktopdir}/audacious.desktop
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/fa{_IR,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/id{_ID,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/ml{_IN,}
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 # outdated version of sr
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
-# unsupported
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/fa_IR
+
 %find_lang %{name}
 
 %clean
