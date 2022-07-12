@@ -60,7 +60,6 @@ Obsoletes:	audacious-output-disk < 1.4
 Obsoletes:	audacious-output-icecast < 2.4
 Obsoletes:	audacious-output-lame < 1.4
 Obsoletes:	audacious-output-null < 3.3
-Obsoletes:	audacious-output-oss < 3.3
 Obsoletes:	audacious-static < 1.2
 Obsoletes:	audacious-transport-curl < 1.4
 Obsoletes:	audacious-transport-lastfm < 2.3
