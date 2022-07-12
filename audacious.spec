@@ -15,20 +15,19 @@ Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
 # Source0-md5:	3f76597aa1d2ea1501a93456b46d870f
 URL:		https://audacious-media-player.org/
 %if %{with qt}
-BuildRequires:	qt5-build >= 5.2
 BuildRequires:	Qt5Core-devel >= 5.2
 BuildRequires:	Qt5Gui-devel >= 5.2
 BuildRequires:	Qt5Widgets-devel >= 5.2
+BuildRequires:	qt5-build >= 5.2
 %endif
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 %{?with_cairo:BuildRequires:	cairo-devel >= 1.6}
 BuildRequires:	gettext-tools
-# -std=gnu++11
 BuildRequires:	glib2-devel >= 1:2.32
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.24}
 BuildRequires:	libguess-devel >= 1.2
-BuildRequires:	libstdc++-devel >= 6:4.7
+# -std=gnu++11
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_gtk:BuildRequires:	pango-devel >= 1:1.20}
 BuildRequires:	pkgconfig
@@ -201,7 +200,7 @@ Audacious.
 %setup -q
 
 # verbose build
-%{__sed} -i '/^\.SILENT:/d' buildsys.mk.in
+%{__sed} -i -e '/^\.SILENT:/d' -e '/MAKE/ s/ -s / /' buildsys.mk.in
 
 %build
 %{__aclocal} -I m4
