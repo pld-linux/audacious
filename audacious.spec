@@ -74,10 +74,10 @@ Obsoletes:	audacious-visualization-rocklight < 3.1
 Obsoletes:	audacious-visualization-rootvis < 2.1
 Obsoletes:	audacious-visualization-rovascope < 1.4
 Obsoletes:	audacious-visualization-spectrum < 3.0
-Obsoletes:	beep-media-player
-Obsoletes:	bmp
-Obsoletes:	bmp-visualization-minilcd
-Obsoletes:	bmp-visualization-wmdiscotux
+Obsoletes:	beep-media-player < 1
+Obsoletes:	bmp < 1
+Obsoletes:	bmp-visualization-minilcd < 1
+Obsoletes:	bmp-visualization-wmdiscotux < 1
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -102,8 +102,8 @@ Group:		Libraries
 %{?with_qt:Requires:	Qt5Core >= 5.2}
 Requires:	glib2 >= 1:2.32
 Requires:	libguess >= 1.2
-Obsoletes:	beep-media-player-libs
-Obsoletes:	bmp-libs
+Obsoletes:	beep-media-player-libs < 1
+Obsoletes:	bmp-libs < 1
 
 %description libs
 Audacious media player libraries.
@@ -121,10 +121,10 @@ Summary(pl.UTF-8):	Pliki nagłówkowe odtwarzacza multimedialnego Audacious
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.32
-Obsoletes:	beep-media-player-devel
-Obsoletes:	beep-media-player-static
-Obsoletes:	bmp-devel
-Obsoletes:	bmp-static
+Obsoletes:	beep-media-player-devel < 1
+Obsoletes:	beep-media-player-static < 1
+Obsoletes:	bmp-devel < 1
+Obsoletes:	bmp-static < 1
 
 %description devel
 Header files required for compiling Audacious media player plugins.
