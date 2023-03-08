@@ -23,11 +23,11 @@ BuildRequires:	qt5-build >= 5.2
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 %{?with_cairo:BuildRequires:	cairo-devel >= 1.6}
-BuildRequires:	gettext-tools
+BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.32
 %{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.24}
 BuildRequires:	libguess-devel >= 1.2
-# -std=gnu++11
+# -std=gnu++11 is minimum, -std=gnu++17 preferred
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_gtk:BuildRequires:	pango-devel >= 1:1.20}
 BuildRequires:	pkgconfig
