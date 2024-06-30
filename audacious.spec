@@ -1,31 +1,30 @@
-#
 # Conditional build:
-%bcond_without	gtk	# GTK+ support
-%bcond_without	qt	# Qt support
+%bcond_without	gtk	# GTK+3 support
+%bcond_without	qt	# Qt6 support
 #
-Summary:	Sound player with the WinAmp GUI, for GTK+/Qt
-Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+/Qt-t használó rendszerekhez
-Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+/Qt
+Summary:	Sound player with the WinAmp GUI, for GTK+3/Qt6
+Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+3/Qt6-t használó rendszerekhez
+Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+3/Qt6
 Name:		audacious
-Version:	4.3.1
-Release:	1
+Version:	4.4
+Release:	0.1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	751a002964907c3a8fc2f571ffc00ec7
+# Source0-md5:	812367242529db8ca0fb0fdb71ffc91f
 URL:		https://audacious-media-player.org/
 %if %{with qt}
-BuildRequires:	Qt5Core-devel >= 5.2
-BuildRequires:	Qt5Gui-devel >= 5.2
-BuildRequires:	Qt5Widgets-devel >= 5.2
-BuildRequires:	qt5-build >= 5.2
+BuildRequires:	Qt6Core-devel >= 6.0
+BuildRequires:	Qt6Gui-devel >= 6.0
+BuildRequires:	Qt6Widgets-devel >= 6.0
+BuildRequires:	Qt6Widgets-devel >= 6.0
+BuildRequires:	qt6-build >= 6.0
 %endif
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-%{?with_cairo:BuildRequires:	cairo-devel >= 1.6}
 BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.32
-%{?with_gtk:BuildRequires:	gtk+2-devel >= 2:2.24}
+%{?with_gtk:BuildRequires:	gtk+3-devel >= 3.22}
 BuildRequires:	libguess-devel >= 1.2
 # -std=gnu++11 is minimum, -std=gnu++17 preferred
 BuildRequires:	libstdc++-devel >= 6:4.7
@@ -95,7 +94,7 @@ Summary:	Audacious media player libraries
 Summary(hu.UTF-8):	Audacious médialejátszó könyvtár
 Summary(pl.UTF-8):	Biblioteki odtwarzacza multimedialnego Audacious
 Group:		Libraries
-%{?with_qt:Requires:	Qt5Core >= 5.2}
+%{?with_qt:Requires:	Qt6Core >= 6.0}
 Requires:	glib2 >= 1:2.32
 Requires:	libguess >= 1.2
 Obsoletes:	beep-media-player-libs < 1
@@ -137,8 +136,7 @@ Summary:	Audacious GTK+ GUI library
 Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ odtwarzacza multimedialnego Audacious
 Group:		X11/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	cairo >= 1.6
-Requires:	gtk+2 >= 2:2.24
+Requires:	gtk+3 >= 3.22
 Requires:	pango >= 1:1.20
 
 %description libs-gtk
@@ -154,8 +152,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe graficznego interfejsu GTK+ odtwarzacza mu
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-libs-gtk = %{version}-%{release}
-Requires:	cairo-devel >= 1.6
-Requires:	gtk+2-devel >= 2:2.24
+Requires:	gtk+2-devel >= 3.22
 Requires:	pango-devel >= 1:1.20
 
 %description libs-gtk-devel
@@ -170,8 +167,8 @@ Summary:	Audacious Qt GUI library
 Summary(pl.UTF-8):	Biblioteka graficznego interfejsu Qt odtwarzacza multimedialnego Audacious
 Group:		X11/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	Qt5Gui >= 5.2
-Requires:	Qt5Widgets >= 5.2
+Requires:	Qt6Gui >= 6.0
+Requires:	Qt6Widgets >= 6.0
 
 %description libs-qt
 Audacious Qt GUI library.
@@ -186,8 +183,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe graficznego interfejsu Qt odtwarzacza mult
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-libs-qt = %{version}-%{release}
-Requires:	Qt5Gui-devel >= 5.2
-Requires:	Qt5Widgets-devel >= 5.2
+Requires:	Qt6Gui-devel >= 6.0
+Requires:	Qt6Widgets-devel >= 6.0
 
 %description libs-qt-devel
 Header files for Audacious Qt GUI library.
@@ -288,7 +285,7 @@ EOF
 %files libs-gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.5
+%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.6
 
 %files libs-gtk-devel
 %defattr(644,root,root,755)
@@ -300,7 +297,7 @@ EOF
 %files libs-qt
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.2
+%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.3
 
 %files libs-qt-devel
 %defattr(644,root,root,755)
