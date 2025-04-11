@@ -7,7 +7,7 @@ Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+3/Qt6-t használ
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+3/Qt6
 Name:		audacious
 Version:	4.4.2
-Release:	1
+Release:	2
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
