@@ -6,32 +6,30 @@ Summary:	Sound player with the WinAmp GUI, for GTK+3/Qt6
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+3/Qt6-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+3/Qt6
 Name:		audacious
-Version:	4.5.1
+Version:	4.6
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	03c01a31d230a51243b112c9b31957af
+# Source0-md5:	2217b555fcbbc8e301642bede990e6ad
 URL:		https://audacious-media-player.org/
+BuildRequires:	meson >= 0.57
 %if %{with qt}
 BuildRequires:	Qt6Core-devel >= 6.0
 BuildRequires:	Qt6Gui-devel >= 6.0
 BuildRequires:	Qt6Svg-devel >= 6.0
 BuildRequires:	Qt6Widgets-devel >= 6.0
-BuildRequires:	Qt6Widgets-devel >= 6.0
 BuildRequires:	qt6-build >= 6.0
 %endif
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	glib2-devel >= 1:2.32
-%{?with_gtk:BuildRequires:	gtk+3-devel >= 3.22}
+BuildRequires:	glib2-devel >= 1:2.36
+%{?with_gtk:BuildRequires:	gtk+3-devel >= 3.24}
 BuildRequires:	libguess-devel >= 1.2
 # -std=gnu++11 is minimum, -std=gnu++17 preferred
 BuildRequires:	libstdc++-devel >= 6:4.7
 %{?with_gtk:BuildRequires:	pango-devel >= 1:1.20}
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.198
+BuildRequires:  rpmbuild(macros) >= 1.726
 BuildRequires:	sed >= 4.0
 Requires(post,postun):	desktop-file-utils
 Requires:	%{name}-libs = %{version}-%{release}
@@ -197,21 +195,19 @@ Audacious.
 %prep
 %setup -q
 
-# verbose build
-%{__sed} -i -e '/^\.SILENT:/d' -e '/MAKE/ s/ -s / /' buildsys.mk.in
-
 %build
-%configure \
-	%{!?with_gtk:--disable-gtk} \
-	%{!?with_qt:--disable-qt}
-%{__make}
+%meson \
+	%{!?with_gtk:-Dgtk=false} \
+	%{!?with_qt:-Dqt=false} \
+	-Dbuildstamp="PLD Linux"
+
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Output,Transport,Visualization}
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+%meson_install
 
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/audacious/{AUTHORS,COPYING}
 %{__rm} $RPM_BUILD_ROOT%{_desktopdir}/audacious.desktop
@@ -221,6 +217,8 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}/{Container,Effect,General,Input,Out
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 # outdated version of sr
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sr_RS
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.a
 
 %find_lang %{name}
 
@@ -255,13 +253,14 @@ EOF
 %{_mandir}/man1/audtool.1*
 %dir %{_datadir}/audacious
 %{_iconsdir}/hicolor/*/apps/audacious.*
+%{_datadir}/metainfo/audacious.metainfo.xml
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudcore.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudcore.so.5
-%attr(755,root,root) %{_libdir}/libaudtag.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudtag.so.3
+%{_libdir}/libaudcore.so.*.*.*
+%ghost %{_libdir}/libaudcore.so.6
+%{_libdir}/libaudtag.so.*.*.*
+%ghost %{_libdir}/libaudtag.so.3
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -273,8 +272,8 @@ EOF
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudcore.so
-%attr(755,root,root) %{_libdir}/libaudtag.so
+%{_libdir}/libaudcore.so
+%{_libdir}/libaudtag.so
 %{_includedir}/audacious
 %{_includedir}/libaudcore
 %{_pkgconfigdir}/audacious.pc
@@ -282,23 +281,23 @@ EOF
 %if %{with gtk}
 %files libs-gtk
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudgui.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudgui.so.6
+%{_libdir}/libaudgui.so.*.*.*
+%ghost %{_libdir}/libaudgui.so.6
 
 %files libs-gtk-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudgui.so
+%{_libdir}/libaudgui.so
 %{_includedir}/libaudgui
 %endif
 
 %if %{with qt}
 %files libs-qt
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudqt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libaudqt.so.3
+%{_libdir}/libaudqt.so.*.*.*
+%ghost %{_libdir}/libaudqt.so.4
 
 %files libs-qt-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libaudqt.so
+%{_libdir}/libaudqt.so
 %{_includedir}/libaudqt
 %endif
