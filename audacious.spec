@@ -6,12 +6,12 @@ Summary:	Sound player with the WinAmp GUI, for GTK+3/Qt6
 Summary(hu.UTF-8):	Zenelejátszó WinAmp-szerű felülettel GTK+3/Qt6-t használó rendszerekhez
 Summary(pl.UTF-8):	Odtwarzacz dźwięku z interfejsem WinAmpa dla GTK+3/Qt6
 Name:		audacious
-Version:	4.6
+Version:	4.6.1
 Release:	1
 License:	BSD
 Group:		X11/Applications/Sound
 Source0:	https://distfiles.audacious-media-player.org/%{name}-%{version}.tar.bz2
-# Source0-md5:	2217b555fcbbc8e301642bede990e6ad
+# Source0-md5:	aca871be9bcca924897060fe51ec87d5
 URL:		https://audacious-media-player.org/
 BuildRequires:	meson >= 0.57
 %if %{with qt}
@@ -260,7 +260,7 @@ EOF
 %{_libdir}/libaudcore.so.*.*.*
 %ghost %{_libdir}/libaudcore.so.6
 %{_libdir}/libaudtag.so.*.*.*
-%ghost %{_libdir}/libaudtag.so.3
+%ghost %{_libdir}/libaudtag.so.4
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/Container
 %dir %{_libdir}/%{name}/Effect
@@ -282,7 +282,7 @@ EOF
 %files libs-gtk
 %defattr(644,root,root,755)
 %{_libdir}/libaudgui.so.*.*.*
-%ghost %{_libdir}/libaudgui.so.6
+%ghost %{_libdir}/libaudgui.so.7
 
 %files libs-gtk-devel
 %defattr(644,root,root,755)
